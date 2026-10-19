@@ -7,7 +7,6 @@ import { MyApplicationPreferencesDocument } from '~/generated-metadata/graphql';
 
 export const useApplicationsWithPreferences = () => {
   const currentWorkspace = useAtomStateValue(currentWorkspaceState);
-  // Installs and upgrades during the session change this list
   const { data, loading, error, refetch } = useQuery(
     MyApplicationPreferencesDocument,
     {
@@ -21,7 +20,7 @@ export const useApplicationsWithPreferences = () => {
   return {
     applicationsWithPreferences: getApplicationsWithPreferences({
       applicationPreferences: data?.myApplicationPreferences ?? [],
-      installedApplications: currentWorkspace?.installedApplications ?? [],
+      currentWorkspace,
     }),
     loading,
     hasApplicationsLoadError:

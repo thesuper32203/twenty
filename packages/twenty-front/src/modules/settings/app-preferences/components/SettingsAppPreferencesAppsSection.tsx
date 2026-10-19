@@ -2,7 +2,7 @@ import { SettingsAppPreferencesAppNameCell } from '@/settings/app-preferences/co
 import { SettingsAppPreferencesAppStatusCell } from '@/settings/app-preferences/components/SettingsAppPreferencesAppStatusCell';
 import { useApplicationsWithPreferences } from '@/settings/app-preferences/hooks/useApplicationsWithPreferences';
 import { useEnabledNativeAccountApps } from '@/settings/app-preferences/hooks/useEnabledNativeAccountApps';
-import { type AppPreferencesApp } from '@/settings/app-preferences/types/AppPreferencesApp';
+import { type AppPreferencesRow } from '@/settings/app-preferences/types/AppPreferencesRow';
 import { SettingsApplicationLoadErrorBanner } from '@/settings/applications/components/SettingsApplicationLoadErrorBanner';
 import { SettingsTableListSection } from '@/settings/components/SettingsTableListSection';
 import { styled } from '@linaria/react';
@@ -22,14 +22,14 @@ export const SettingsAppPreferencesAppsSection = () => {
   const { applicationsWithPreferences, hasApplicationsLoadError, refetch } =
     useApplicationsWithPreferences();
 
-  const apps: AppPreferencesApp[] = [
-    ...enabledNativeAccountApps.map((nativeAccountApp): AppPreferencesApp => ({
+  const rows: AppPreferencesRow[] = [
+    ...enabledNativeAccountApps.map((nativeAccountApp): AppPreferencesRow => ({
       type: 'native',
       id: nativeAccountApp.id,
       nativeAccountApp,
     })),
     ...applicationsWithPreferences.map(
-      (applicationWithPreferences): AppPreferencesApp => ({
+      (applicationWithPreferences): AppPreferencesRow => ({
         type: 'installed',
         id: applicationWithPreferences.application.id,
         applicationWithPreferences,
@@ -38,7 +38,7 @@ export const SettingsAppPreferencesAppsSection = () => {
   ];
 
   return (
-    <SettingsTableListSection<AppPreferencesApp>
+    <SettingsTableListSection<AppPreferencesRow>
       title={t`App preferences`}
       description={t`Choose your preferences for the apps installed on your workspace by the admin`}
       toolbar={
@@ -51,7 +51,7 @@ export const SettingsAppPreferencesAppsSection = () => {
           </StyledToolbar>
         ) : undefined
       }
-      items={apps}
+      items={rows}
       columns={[
         { label: t`App`, Cell: SettingsAppPreferencesAppNameCell },
         {
@@ -62,13 +62,13 @@ export const SettingsAppPreferencesAppsSection = () => {
       ]}
       gridAutoColumns="1fr 1fr"
       showRowChevron
-      onRowClick={(app) =>
-        app.type === 'native'
+      onRowClick={(row) =>
+        row.type === 'native'
           ? navigateSettings(SettingsPath.NativeAccountApp, {
-              nativeAccountAppId: app.nativeAccountApp.id,
+              nativeAccountAppId: row.nativeAccountApp.id,
             })
           : navigateSettings(SettingsPath.ApplicationPreferences, {
-              applicationId: app.applicationWithPreferences.application.id,
+              applicationId: row.applicationWithPreferences.application.id,
             })
       }
     />

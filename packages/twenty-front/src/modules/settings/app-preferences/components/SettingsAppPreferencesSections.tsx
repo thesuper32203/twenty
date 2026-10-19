@@ -18,7 +18,6 @@ export const SettingsAppPreferencesSections = () => {
       {(hasNativeAccountApps ||
         isNonEmptyArray(applicationsWithPreferences) ||
         hasApplicationsLoadError) && <SettingsAppPreferencesAppsSection />}
-      {/* The blocklist otherwise lives on the native apps' pages */}
       {!hasNativeAccountApps && <SettingsAccountsBlocklistSection />}
     </>
   );
