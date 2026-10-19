@@ -37,7 +37,6 @@ export const SettingsApplicationPreferences = () => {
     return <SettingsSkeletonLoader />;
   }
 
-  // Only a successful read proves the app is gone, a failed one may keep a stale list
   if (isAppPreferencesEnabled && isDefined(error)) {
     return (
       <SettingsPageLayout

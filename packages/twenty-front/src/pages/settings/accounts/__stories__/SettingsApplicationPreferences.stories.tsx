@@ -115,7 +115,6 @@ export const ClearedValueFallsBackToTheDefault: Story = {
         ],
       ]),
     );
-    // Save is also disabled while saving, so only the refetched default proves the save settled
     await waitFor(() => expect(recordMyMeetingsInput).toHaveValue('always'), {
       timeout: 3000,
     });
