@@ -1,10 +1,11 @@
-import { useContextStoreObjectMetadataItemOrThrow } from '@/context-store/hooks/useContextStoreObjectMetadataItemOrThrow';
+import { useContextStoreObjectMetadataItem } from '@/context-store/hooks/useContextStoreObjectMetadataItem';
 import { spreadsheetImportFilterAvailableFieldMetadataItems } from '@/object-record/spreadsheet-import/utils/spreadsheetImportFilterAvailableFieldMetadataItems';
 import { getCompositeSubFieldLabelWithFieldLabel } from '@/object-record/spreadsheet-import/utils/spreadsheetImportGetCompositeSubFieldLabelWithFieldLabel';
 import { SETTINGS_COMPOSITE_FIELD_TYPE_CONFIGS } from '@/settings/data-model/constants/SettingsCompositeFieldTypeConfigs';
 import { SETTINGS_NON_COMPOSITE_FIELD_TYPE_CONFIGS } from '@/settings/data-model/constants/SettingsNonCompositeFieldTypeConfigs';
 import {
   formatValueForCSV,
+  isDefined,
   sanitizeValueForCSVExport,
 } from 'twenty-shared/utils';
 import { t } from '@lingui/core/macro';
@@ -12,11 +13,11 @@ import { saveAs } from 'file-saver';
 import { FieldMetadataType } from 'twenty-shared/types';
 
 export const useDownloadFakeRecords = () => {
-  const { objectMetadataItem } = useContextStoreObjectMetadataItemOrThrow();
+  const { objectMetadataItem } = useContextStoreObjectMetadataItem();
 
   const availableFieldMetadataItems =
     spreadsheetImportFilterAvailableFieldMetadataItems(
-      objectMetadataItem.updatableFields,
+      objectMetadataItem?.updatableFields ?? [],
     );
 
   const buildTableWithFakeRecords = () => {
@@ -138,11 +139,16 @@ export const useDownloadFakeRecords = () => {
   };
 
   const downloadSample = () => {
+    if (!isDefined(objectMetadataItem)) {
+      return;
+    }
     const { headerRow, bodyRows } = buildTableWithFakeRecords();
     const csvContent = formatToCsvContent([headerRow, ...bodyRows]);
     const blob = new Blob(csvContent, { type: 'text/csv' });
     saveAs(blob, `${objectMetadataItem.labelPlural.toLowerCase()}-sample.csv`);
   };
 
-  return { downloadSample };
+  return {
+    downloadSample: isDefined(objectMetadataItem) ? downloadSample : undefined,
+  };
 };

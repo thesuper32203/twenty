@@ -3,6 +3,7 @@ import { RecordPageSidePanelPinnedCommandMenuItems } from '@/command-menu-item/c
 import { RecordPageSidePanelWidgetCommandMenuItems } from '@/command-menu-item/components/RecordPageSidePanelWidgetCommandMenuItems';
 import { InformationBannerDeletedRecord } from '@/information-banner/components/deleted-record/InformationBannerDeletedRecord';
 import { RecordShowContainerContextStoreTargetedRecordsEffect } from '@/object-record/record-show/components/RecordShowContainerContextStoreTargetedRecordsEffect';
+import { OpportunityContactDetails } from '@/object-record/record-show/components/OpportunityContactDetails';
 import { recordStoreFamilySelector } from '@/object-record/record-store/states/selectors/recordStoreFamilySelector';
 import { PageLayoutRenderer } from '@/page-layout/components/PageLayoutRenderer';
 import { usePageLayoutIdForRecord } from '@/page-layout/hooks/usePageLayoutIdForRecord';
@@ -78,6 +79,12 @@ export const PageLayoutRecordPageRenderer = ({
 
       <StyledShowPageRightContainer data-record-show-page-body="">
         <StyledContentContainer>
+          {targetRecordIdentifier.targetObjectNameSingular ===
+            CoreObjectNameSingular.Opportunity && (
+            <OpportunityContactDetails
+              opportunityId={targetRecordIdentifier.id}
+            />
+          )}
           <LayoutRenderingProvider
             value={{
               targetRecordIdentifier: {

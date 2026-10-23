@@ -60,7 +60,7 @@ export type AddressMetadata = {
   addressStreet2: string;
   addressCity: string;
   addressState: string;
-  addressZipCode: string;
+  addressPostcode: string;
   addressCountry: string;
   addressLat: number;
   addressLng: number;

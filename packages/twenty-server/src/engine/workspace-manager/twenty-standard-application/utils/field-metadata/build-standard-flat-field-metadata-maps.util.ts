@@ -35,6 +35,10 @@ import { buildMessageThreadTargetStandardFlatFieldMetadatas } from 'src/engine/w
 import { buildNoteStandardFlatFieldMetadatas } from 'src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-note-standard-flat-field-metadata.util';
 import { buildNoteTargetStandardFlatFieldMetadatas } from 'src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-note-target-standard-flat-field-metadata.util';
 import { buildOpportunityStandardFlatFieldMetadatas } from 'src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-opportunity-standard-flat-field-metadata.util';
+import { buildPropertyStandardFlatFieldMetadatas } from 'src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-property-standard-flat-field-metadata.util';
+import { buildPersonPropertyStandardFlatFieldMetadatas } from 'src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-person-property-standard-flat-field-metadata.util';
+import { buildImportBatchStandardFlatFieldMetadatas } from 'src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-import-batch-standard-flat-field-metadata.util';
+import { buildImportRowResultStandardFlatFieldMetadatas } from 'src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-import-row-result-standard-flat-field-metadata.util';
 import { buildPersonStandardFlatFieldMetadatas } from 'src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-person-standard-flat-field-metadata.util';
 import { buildRecordShareStandardFlatFieldMetadatas } from 'src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-record-share-standard-flat-field-metadata.util';
 import { buildShortLinkStandardFlatFieldMetadatas } from 'src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-short-link-standard-flat-field-metadata.util';
@@ -88,6 +92,10 @@ const STANDARD_FLAT_FIELD_METADATA_BUILDERS_BY_OBJECT_NAME = {
   note: buildNoteStandardFlatFieldMetadatas,
   noteTarget: buildNoteTargetStandardFlatFieldMetadatas,
   opportunity: buildOpportunityStandardFlatFieldMetadatas,
+  property: buildPropertyStandardFlatFieldMetadatas,
+  personProperty: buildPersonPropertyStandardFlatFieldMetadatas,
+  importBatch: buildImportBatchStandardFlatFieldMetadatas,
+  importRowResult: buildImportRowResultStandardFlatFieldMetadatas,
   person: buildPersonStandardFlatFieldMetadatas,
   recordShare: buildRecordShareStandardFlatFieldMetadatas,
   shortLink: buildShortLinkStandardFlatFieldMetadatas,

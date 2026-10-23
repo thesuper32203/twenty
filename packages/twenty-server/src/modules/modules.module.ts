@@ -23,6 +23,9 @@ import { MessagingModule } from 'src/modules/messaging/messaging.module';
 import { OnboardingInviteSuggestionsModule } from 'src/modules/onboarding-invite-suggestions/onboarding-invite-suggestions.module';
 import { WorkflowModule } from 'src/modules/workflow/workflow.module';
 import { WorkspaceMemberModule } from 'src/modules/workspace-member/workspace-member.module';
+import { WholesaleImportModule } from 'src/modules/wholesale-import/wholesale-import.module';
+import { PropertyQueryHookModule } from 'src/modules/property/query-hooks/property-query-hook.module';
+import { ImportHistoryQueryHookModule } from 'src/modules/homeowner-import/query-hooks/import-history-query-hook.module';
 
 @Module({
   imports: [
@@ -32,6 +35,9 @@ import { WorkspaceMemberModule } from 'src/modules/workspace-member/workspace-me
     OnboardingInviteSuggestionsModule,
     WorkflowModule,
     WorkspaceMemberModule,
+    WholesaleImportModule,
+    PropertyQueryHookModule,
+    ImportHistoryQueryHookModule,
     EmailingModule,
     MessagingWebhooksModule,
     ConnectedAccountSyncWebhooksModule,

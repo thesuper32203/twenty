@@ -58,3 +58,17 @@ npx nx run twenty-front:graphql:generate      # after GraphQL schema changes (--
 - **Entity file changes need a generated instance command**: `npx nx run twenty-server:database:migrate:generate --name <name> --type <fast|slow>` (slow = adds a data-backfill step).
 - A read-only Postgres MCP server is configured in `.mcp.json` for inspecting workspace data, metadata, and migration results. Writes go through the CLI commands above.
 - E2E login: click "Continue with Email" and use the prefilled credentials.
+
+## Codebase navigation for Codex
+
+For every application change, follow the six-phase [CRM change workflow](.claude/skills/crm-change-workflow/SKILL.md). The repository's `AGENTS.md` points to this file.
+
+Use the relevant map in `docs/` before modifying a subsystem:
+
+- [Architecture](docs/ARCHITECTURE.md): runtime components and data flow.
+- [Feature map](docs/FEATURE_MAP.md): feature-to-file and API navigation.
+- [Database map](docs/DATABASE_MAP.md): core metadata, workspace records, and migrations.
+- [Agent system](docs/AGENT_SYSTEM.md): product AI agents and their execution path.
+- [Development guide](docs/DEVELOPMENT_GUIDE.md): change and verification workflow.
+
+Inspect the current source and neighboring tests before implementing: these maps are pointers, not a substitute for code. Reuse existing services, guards, utilities, and queue infrastructure; avoid unnecessary dependencies and preserve local architectural patterns. Update the affected map when implementation changes, and verify affected behavior with targeted tests. Preserve existing documentation and architectural decision records. Repository skill families are indexed in [SKILLS.md](SKILLS.md); use the relevant local skill when its scope applies.

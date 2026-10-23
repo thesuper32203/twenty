@@ -105,6 +105,7 @@ export const MatchColumnToFieldSelect = ({
               }
             }}
             suggestedOptions={suggestedOptions}
+            fieldOptions={options}
           />
         </Dropdown.Page>
         <Dropdown.Page id="sub-field">

@@ -27,6 +27,7 @@ export enum AppPath {
   WorkflowCoreShowPage = '/workflow/:coreWorkflowId',
   AgentIndexPage = '/agents',
   AgentShowPage = '/agent/:agentId',
+  Imports = '/imports',
 
   Settings = `settings`,
   SettingsCatchAll = `/${Settings}/*`,

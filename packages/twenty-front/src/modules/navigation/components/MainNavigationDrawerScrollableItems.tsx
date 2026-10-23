@@ -1,8 +1,15 @@
 import { NavigationDrawerOpenedSection } from '@/navigation-menu-item/display/sections/components/NavigationDrawerOpenedSection';
+import { NavigationMenuItemSection } from '@/navigation-menu-item/display/sections/components/NavigationMenuItemSection';
+import { NavigationDrawerItem } from '@/ui/navigation/navigation-drawer/components/NavigationDrawerItem';
+import { useNavigationSection } from '@/ui/navigation/navigation-drawer/hooks/useNavigationSection';
 import { NavigationDrawerWorkspaceSectionSkeletonLoader } from '@/object-metadata/components/NavigationDrawerWorkspaceSectionSkeletonLoader';
 
 import { styled } from '@linaria/react';
 import { lazy, Suspense } from 'react';
+import { useLocation } from 'react-router-dom';
+import { AppPath } from 'twenty-shared/types';
+import { IconFileImport } from 'twenty-ui/icon';
+import { useLingui } from '@lingui/react/macro';
 
 import { themeCssVariables } from 'twenty-ui/theme';
 
@@ -29,6 +36,11 @@ const StyledScrollableItemsContainer = styled.div`
 `;
 
 export const MainNavigationDrawerScrollableItems = () => {
+  const { t } = useLingui();
+  const location = useLocation();
+  const { toggleNavigationSection, isNavigationSectionOpen } =
+    useNavigationSection('Contacts & Data');
+
   return (
     <StyledScrollableItemsContainer>
       <NavigationDrawerOpenedSection />
@@ -36,6 +48,18 @@ export const MainNavigationDrawerScrollableItems = () => {
         <FavoritesSectionDispatcher />
         <WorkspaceSectionDispatcher />
       </Suspense>
+      <NavigationMenuItemSection
+        title={t`Contacts & Data`}
+        isOpen={isNavigationSectionOpen}
+        onToggle={toggleNavigationSection}
+      >
+        <NavigationDrawerItem
+          label={t`Imports`}
+          to={AppPath.Imports}
+          Icon={IconFileImport}
+          active={location.pathname === AppPath.Imports}
+        />
+      </NavigationMenuItemSection>
     </StyledScrollableItemsContainer>
   );
 };

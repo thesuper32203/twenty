@@ -381,6 +381,30 @@ export const buildOpportunityStandardFlatFieldMetadatas = ({
     now,
   }),
 
+  property: createStandardRelationFieldFlatMetadata({
+    objectName,
+    workspaceId,
+    context: {
+      type: FieldMetadataType.RELATION,
+      morphId: null,
+      fieldName: 'property',
+      label: i18nLabel(msg({ message: `Property`, context: 'fieldMetadata.label' })),
+      description: i18nLabel(msg({ message: `Subject property`, context: 'fieldMetadata.description' })),
+      icon: 'IconHome',
+      isNullable: true,
+      targetObjectName: 'property',
+      targetFieldName: 'opportunities',
+      settings: {
+        relationType: RelationType.MANY_TO_ONE,
+        onDelete: RelationOnDeleteAction.SET_NULL,
+        joinColumnName: 'propertyId',
+      },
+    },
+    standardObjectMetadataRelatedEntityIds,
+    dependencyFlatEntityMaps,
+    twentyStandardApplicationId,
+    now,
+  }),
   pointOfContact: createStandardRelationFieldFlatMetadata({
     objectName,
     workspaceId,

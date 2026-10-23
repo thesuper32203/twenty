@@ -1,4 +1,5 @@
 import { type FieldMetadataItem } from '@/object-metadata/types/FieldMetadataItem';
+import { type SpreadsheetImportFieldOption } from '@/spreadsheet-import/types/SpreadsheetImportFieldOption';
 import { getFieldMetadataTypeLabel } from '@/object-record/object-filter-dropdown/utils/getFieldMetadataTypeLabel';
 import { DO_NOT_IMPORT_OPTION_KEY } from '@/spreadsheet-import/constants/DoNotImportOptionKey';
 import { useSpreadsheetImportInternal } from '@/spreadsheet-import/hooks/useSpreadsheetImportInternal';
@@ -27,6 +28,7 @@ type MatchColumnSelectFieldSelectDropdownContentProps = {
   suggestedOptions: readonly ReadonlyDeep<
     SelectOption & { fieldMetadataTypeLabel?: string }
   >[];
+  fieldOptions: readonly ReadonlyDeep<SpreadsheetImportFieldOption>[];
 };
 
 export const MatchColumnSelectFieldSelectDropdownContent = ({
@@ -35,6 +37,7 @@ export const MatchColumnSelectFieldSelectDropdownContent = ({
   onSelectSuggestedOption,
   onDoNotImportSelect,
   suggestedOptions,
+  fieldOptions,
 }: MatchColumnSelectFieldSelectDropdownContentProps) => {
   const [searchFilter, setSearchFilter] = useState('');
   const { availableFieldMetadataItems } = useSpreadsheetImportInternal();
@@ -59,6 +62,12 @@ export const MatchColumnSelectFieldSelectDropdownContent = ({
   const hasAvailableFields = isNonEmptyArray(
     filteredAvailableFieldMetadataItems,
   );
+  const filteredFieldOptions = fieldOptions.filter(
+    (option) =>
+      option.value !== DO_NOT_IMPORT_OPTION_KEY &&
+      normalizeSearchText(option.label).includes(searchTerm),
+  );
+  const showFieldOptions = availableFieldMetadataItems.length === 0;
 
   const handleFieldSelect = (fieldMetadataItem: FieldMetadataItem) => {
     onSelectFieldMetadataItem(fieldMetadataItem);
@@ -126,9 +135,26 @@ export const MatchColumnSelectFieldSelectDropdownContent = ({
             ))}
           </Dropdown.Section>
         )}
+        {showFieldOptions && isNonEmptyArray(filteredFieldOptions) && (
+          <Dropdown.Section label={t`All fields`}>
+            {filteredFieldOptions.map((option) => (
+              <Dropdown.OptionItem
+                key={option.value}
+                onSelect={() => onSelectSuggestedOption(option)}
+                selected={selectedValue?.value === option.value}
+                disabled={option.disabled && selectedValue?.value !== option.value}
+                description={option.fieldMetadataTypeLabel}
+                startIcon={<SelectOptionIcon Icon={option.Icon} />}
+              >
+                {option.label}
+              </Dropdown.OptionItem>
+            ))}
+          </Dropdown.Section>
+        )}
         {!shouldShowDoNotImport &&
           !hasSuggestedOptions &&
-          !hasAvailableFields && (
+          !hasAvailableFields &&
+          (!showFieldOptions || !isNonEmptyArray(filteredFieldOptions)) && (
             <Dropdown.Empty>{t`No fields found`}</Dropdown.Empty>
           )}
       </StyledContainer>

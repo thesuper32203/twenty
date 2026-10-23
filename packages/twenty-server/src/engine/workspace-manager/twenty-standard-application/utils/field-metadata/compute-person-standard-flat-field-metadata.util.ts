@@ -163,7 +163,7 @@ export const buildPersonStandardFlatFieldMetadatas = ({
       fieldName: 'emails',
       type: FieldMetadataType.EMAILS,
       label: i18nLabel(
-        msg({ message: `Emails`, context: 'fieldMetadata.label' }),
+        msg({ message: `Email`, context: 'fieldMetadata.label' }),
       ),
       description: i18nLabel(
         msg({
@@ -176,6 +176,37 @@ export const buildPersonStandardFlatFieldMetadatas = ({
       isUnique: true,
       settings: {
         maxNumberOfValues: 1,
+      },
+    },
+    standardObjectMetadataRelatedEntityIds,
+    dependencyFlatEntityMaps,
+    twentyStandardApplicationId,
+    now,
+  }),
+  propertyAddress: createStandardFieldFlatMetadata({
+    objectName,
+    workspaceId,
+    context: {
+      fieldName: 'propertyAddress',
+      type: FieldMetadataType.ADDRESS,
+      label: i18nLabel(
+        msg({ message: `Property Address`, context: 'fieldMetadata.label' }),
+      ),
+      description: i18nLabel(
+        msg({
+          message: `Property address associated with the contact`,
+          context: 'fieldMetadata.description',
+        }),
+      ),
+      icon: 'IconMap',
+      isNullable: true,
+      settings: {
+        subFields: [
+          'addressStreet1',
+          'addressCity',
+          'addressState',
+          'addressPostcode',
+        ],
       },
     },
     standardObjectMetadataRelatedEntityIds,
@@ -236,7 +267,7 @@ export const buildPersonStandardFlatFieldMetadatas = ({
       fieldName: 'phones',
       type: FieldMetadataType.PHONES,
       label: i18nLabel(
-        msg({ message: `Phones`, context: 'fieldMetadata.label' }),
+        msg({ message: `Phone Number`, context: 'fieldMetadata.label' }),
       ),
       description: i18nLabel(
         msg({
@@ -418,6 +449,26 @@ export const buildPersonStandardFlatFieldMetadatas = ({
         onDelete: RelationOnDeleteAction.SET_NULL,
         joinColumnName: 'companyId',
       },
+    },
+    standardObjectMetadataRelatedEntityIds,
+    dependencyFlatEntityMaps,
+    twentyStandardApplicationId,
+    now,
+  }),
+  propertyLinks: createStandardRelationFieldFlatMetadata({
+    objectName,
+    workspaceId,
+    context: {
+      type: FieldMetadataType.RELATION,
+      morphId: null,
+      fieldName: 'propertyLinks',
+      label: i18nLabel(msg({ message: `Properties`, context: 'fieldMetadata.label' })),
+      description: i18nLabel(msg({ message: `Properties linked to this person`, context: 'fieldMetadata.description' })),
+      icon: 'IconHome',
+      isNullable: true,
+      targetObjectName: 'personProperty',
+      targetFieldName: 'person',
+      settings: { relationType: RelationType.ONE_TO_MANY },
     },
     standardObjectMetadataRelatedEntityIds,
     dependencyFlatEntityMaps,

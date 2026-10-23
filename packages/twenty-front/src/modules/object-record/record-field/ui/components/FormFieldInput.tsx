@@ -1,3 +1,4 @@
+import { t } from '@lingui/core/macro';
 import { isDefined } from 'twenty-shared/utils';
 import { FormAddressFieldInput } from '@/object-record/record-field/ui/form-types/components/FormAddressFieldInput';
 import { FormArrayFieldInput } from '@/object-record/record-field/ui/form-types/components/FormArrayFieldInput';
@@ -148,6 +149,13 @@ export const FormFieldInput = ({
       VariablePicker={VariablePicker}
       readonly={readonly}
       subFieldPlaceholders={subFieldPlaceholders}
+      subFields={field.metadata.settings?.subFields}
+      postcodeLabel={
+        field.metadata.objectMetadataNameSingular === 'person' &&
+        field.metadata.fieldName === 'propertyAddress'
+          ? t`ZIP code`
+          : undefined
+      }
     />
   ) : isFieldLinks(field) ? (
     <FormLinksFieldInput

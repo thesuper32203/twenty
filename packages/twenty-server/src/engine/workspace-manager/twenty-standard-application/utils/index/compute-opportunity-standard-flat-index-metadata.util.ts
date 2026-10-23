@@ -17,6 +17,18 @@ export const buildOpportunityStandardFlatIndexMetadatas = ({
   AllStandardObjectIndexName<'opportunity'>,
   FlatIndexMetadata
 > => ({
+  propertyIdIndex: createStandardIndexFlatMetadata({
+    objectName,
+    workspaceId,
+    context: {
+      indexName: 'propertyIdIndex',
+      relatedFieldNames: ['property'],
+    },
+    standardObjectMetadataRelatedEntityIds,
+    dependencyFlatEntityMaps,
+    twentyStandardApplicationId,
+    now,
+  }),
   pointOfContactIdIndex: createStandardIndexFlatMetadata({
     objectName,
     workspaceId,

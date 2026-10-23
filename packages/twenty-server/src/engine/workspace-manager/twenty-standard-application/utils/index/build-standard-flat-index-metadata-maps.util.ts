@@ -32,6 +32,10 @@ import { buildMessageThreadTargetStandardFlatIndexMetadatas } from 'src/engine/w
 import { buildNoteStandardFlatIndexMetadatas } from 'src/engine/workspace-manager/twenty-standard-application/utils/index/compute-note-standard-flat-index-metadata.util';
 import { buildNoteTargetStandardFlatIndexMetadatas } from 'src/engine/workspace-manager/twenty-standard-application/utils/index/compute-note-target-standard-flat-index-metadata.util';
 import { buildOpportunityStandardFlatIndexMetadatas } from 'src/engine/workspace-manager/twenty-standard-application/utils/index/compute-opportunity-standard-flat-index-metadata.util';
+import { buildPropertyStandardFlatIndexMetadatas } from 'src/engine/workspace-manager/twenty-standard-application/utils/index/compute-property-standard-flat-index-metadata.util';
+import { buildPersonPropertyStandardFlatIndexMetadatas } from 'src/engine/workspace-manager/twenty-standard-application/utils/index/compute-person-property-standard-flat-index-metadata.util';
+import { buildImportBatchStandardFlatIndexMetadatas } from 'src/engine/workspace-manager/twenty-standard-application/utils/index/compute-import-batch-standard-flat-index-metadata.util';
+import { buildImportRowResultStandardFlatIndexMetadatas } from 'src/engine/workspace-manager/twenty-standard-application/utils/index/compute-import-row-result-standard-flat-index-metadata.util';
 import { buildPersonStandardFlatIndexMetadatas } from 'src/engine/workspace-manager/twenty-standard-application/utils/index/compute-person-standard-flat-index-metadata.util';
 import { buildRecordShareStandardFlatIndexMetadatas } from 'src/engine/workspace-manager/twenty-standard-application/utils/index/compute-record-share-standard-flat-index-metadata.util';
 import { buildShortLinkStandardFlatIndexMetadatas } from 'src/engine/workspace-manager/twenty-standard-application/utils/index/compute-short-link-standard-flat-index-metadata.util';
@@ -84,6 +88,10 @@ const STANDARD_FLAT_INDEX_METADATA_BUILDERS_BY_OBJECT_NAME = {
   note: buildNoteStandardFlatIndexMetadatas,
   noteTarget: buildNoteTargetStandardFlatIndexMetadatas,
   opportunity: buildOpportunityStandardFlatIndexMetadatas,
+  property: buildPropertyStandardFlatIndexMetadatas,
+  personProperty: buildPersonPropertyStandardFlatIndexMetadatas,
+  importBatch: buildImportBatchStandardFlatIndexMetadatas,
+  importRowResult: buildImportRowResultStandardFlatIndexMetadatas,
   person: buildPersonStandardFlatIndexMetadatas,
   recordShare: buildRecordShareStandardFlatIndexMetadatas,
   shortLink: buildShortLinkStandardFlatIndexMetadatas,

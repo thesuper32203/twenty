@@ -84,6 +84,18 @@ export const computeStandardOpportunityViewFields = (
         size: 150,
       },
     }),
+    allOpportunitiesProperty: createStandardViewFieldFlatMetadata({
+      ...args,
+      objectName: 'opportunity',
+      context: {
+        viewName: 'allOpportunities',
+        viewFieldName: 'property',
+        fieldName: 'property',
+        position: 6,
+        isVisible: true,
+        size: 180,
+      },
+    }),
 
     byStageName: createStandardViewFieldFlatMetadata({
       ...args,
@@ -157,6 +169,18 @@ export const computeStandardOpportunityViewFields = (
         size: 150,
       },
     }),
+    byStageProperty: createStandardViewFieldFlatMetadata({
+      ...args,
+      objectName: 'opportunity',
+      context: {
+        viewName: 'byStage',
+        viewFieldName: 'property',
+        fieldName: 'property',
+        position: 6,
+        isVisible: true,
+        size: 180,
+      },
+    }),
 
     opportunityRecordPageFieldsAmount: createStandardViewFieldFlatMetadata({
       ...args,
@@ -194,6 +218,19 @@ export const computeStandardOpportunityViewFields = (
         position: 2,
         isVisible: true,
         size: 150,
+        viewFieldGroupName: 'deal',
+      },
+    }),
+    opportunityRecordPageFieldsProperty: createStandardViewFieldFlatMetadata({
+      ...args,
+      objectName: 'opportunity',
+      context: {
+        viewName: 'opportunityRecordPageFields',
+        viewFieldName: 'property',
+        fieldName: 'property',
+        position: 3,
+        isVisible: true,
+        size: 180,
         viewFieldGroupName: 'deal',
       },
     }),

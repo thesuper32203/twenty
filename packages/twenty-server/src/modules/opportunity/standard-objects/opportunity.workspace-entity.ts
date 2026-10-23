@@ -9,6 +9,7 @@ import { type NoteTargetWorkspaceEntity } from 'src/modules/note/standard-object
 import { type CalendarEventTargetWorkspaceEntity } from 'src/modules/calendar/common/standard-objects/calendar-event-target.workspace-entity';
 import { type MessageThreadTargetWorkspaceEntity } from 'src/modules/messaging/common/standard-objects/message-thread-target.workspace-entity';
 import { type PersonWorkspaceEntity } from 'src/modules/person/standard-objects/person.workspace-entity';
+import { type PropertyWorkspaceEntity } from 'src/modules/property/standard-objects/property.workspace-entity';
 import { type TaskTargetWorkspaceEntity } from 'src/modules/task/standard-objects/task-target.workspace-entity';
 import { type TimelineActivityWorkspaceEntity } from 'src/modules/timeline/standard-objects/timeline-activity.workspace-entity';
 import { type WorkspaceMemberWorkspaceEntity } from 'src/modules/workspace-member/standard-objects/workspace-member.workspace-entity';
@@ -23,6 +24,8 @@ export class OpportunityWorkspaceEntity extends BaseWorkspaceEntity {
   updatedBy: ActorMetadata;
   pointOfContact: EntityRelation<PersonWorkspaceEntity> | null;
   pointOfContactId: string | null;
+  property: EntityRelation<PropertyWorkspaceEntity> | null;
+  propertyId: string | null;
   company: EntityRelation<CompanyWorkspaceEntity> | null;
   companyId: string | null;
   taskTargets: EntityRelation<TaskTargetWorkspaceEntity[]>;

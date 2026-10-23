@@ -25,11 +25,13 @@ export const RecordIndexViewBar = () => {
         isReadOnly={hasCurrentViewNonReadableFields}
         viewBarId={recordIndexId}
         optionsDropdownButton={
-          <ObjectOptionsDropdown
-            recordIndexId={recordIndexId}
-            objectMetadataItem={objectMetadataItem}
-            viewType={recordIndexViewType ?? ViewType.TABLE}
-          />
+          <>
+            <ObjectOptionsDropdown
+              recordIndexId={recordIndexId}
+              objectMetadataItem={objectMetadataItem}
+              viewType={recordIndexViewType ?? ViewType.TABLE}
+            />
+          </>
         }
       />
       <RecordIndexViewBarEffect

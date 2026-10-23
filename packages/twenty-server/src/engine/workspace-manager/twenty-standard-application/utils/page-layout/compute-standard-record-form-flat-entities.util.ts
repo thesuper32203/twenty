@@ -10,6 +10,7 @@ import {
   WidgetType,
 } from 'twenty-shared/types';
 import { isDefined } from 'twenty-shared/utils';
+import { STANDARD_OBJECT_UNIVERSAL_IDENTIFIERS } from 'twenty-shared/metadata';
 import { v4 } from 'uuid';
 
 import { type FlatEntityMaps } from 'src/engine/metadata-modules/flat-entity/types/flat-entity-maps.type';
@@ -37,6 +38,13 @@ const STANDARD_RECORD_FORM_NAME = i18nLabel(
     context: 'pageLayout.name',
   }),
 );
+
+const PERSON_FORM_FIELD_ORDER = [
+  'name',
+  'phones',
+  'emails',
+  'propertyAddress',
+] as const;
 
 type ComputeStandardRecordFormFlatEntitiesArgs = {
   now: string;
@@ -122,6 +130,25 @@ export const computeStandardRecordFormFlatEntities = ({
         flatObjectMetadata.labelIdentifierFieldMetadataUniversalIdentifier,
     });
 
+    if (
+      flatObjectMetadata.universalIdentifier ===
+      STANDARD_OBJECT_UNIVERSAL_IDENTIFIERS.person
+    ) {
+      orderedFormFlatFieldMetadatas.sort((firstField, secondField) => {
+        const firstIndex = PERSON_FORM_FIELD_ORDER.indexOf(
+          firstField.name as (typeof PERSON_FORM_FIELD_ORDER)[number],
+        );
+        const secondIndex = PERSON_FORM_FIELD_ORDER.indexOf(
+          secondField.name as (typeof PERSON_FORM_FIELD_ORDER)[number],
+        );
+
+        return (
+          (firstIndex < 0 ? Infinity : firstIndex) -
+          (secondIndex < 0 ? Infinity : secondIndex)
+        );
+      });
+    }
+
     const objectFlatPageLayoutWidgets: FlatPageLayoutWidget[] =
       orderedFormFlatFieldMetadatas.map((flatFieldMetadata, index) => ({
         id: v4(),
@@ -155,7 +182,12 @@ export const computeStandardRecordFormFlatEntities = ({
         objectMetadataId: flatObjectMetadata.id,
         objectMetadataUniversalIdentifier:
           flatObjectMetadata.universalIdentifier,
-        isActive: true,
+        isActive:
+          flatObjectMetadata.universalIdentifier !==
+            STANDARD_OBJECT_UNIVERSAL_IDENTIFIERS.person ||
+          PERSON_FORM_FIELD_ORDER.some(
+            (fieldName) => fieldName === flatFieldMetadata.name,
+          ),
         isSystemSideEffect: true,
         createdAt: now,
         updatedAt: now,

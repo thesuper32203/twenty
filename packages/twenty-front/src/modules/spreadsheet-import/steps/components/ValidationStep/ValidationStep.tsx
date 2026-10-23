@@ -20,6 +20,7 @@ import {
   type SetStateAction,
   useCallback,
   useMemo,
+  useRef,
   useState,
 } from 'react';
 import { themeCssVariables } from 'twenty-ui/theme';
@@ -114,6 +115,8 @@ export const ValidationStep = ({
     onSubmit,
     rowHook,
     tableHook,
+    submitBeforeImportStep,
+    invalidRowsSubmitMessage,
   } = useSpreadsheetImportInternal();
 
   const [data, setData] = useState<
@@ -129,6 +132,8 @@ export const ValidationStep = ({
     ReadonlySet<number | string>
   >(new Set());
   const [filterByErrors, setFilterByErrors] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const submittingRef = useRef(false);
 
   const updateData = useCallback(
     (rows: typeof data) => {
@@ -218,6 +223,11 @@ export const ValidationStep = ({
   );
 
   const submitData = async () => {
+    if (submittingRef.current) {
+      return;
+    }
+    submittingRef.current = true;
+    setIsSubmitting(true);
     const calculatedData = data.reduce(
       (acc, value) => {
         const { __index, __errors, ...values } = value;
@@ -243,14 +253,32 @@ export const ValidationStep = ({
       } satisfies SpreadsheetImportImportValidationResult,
     );
 
-    setCurrentStepState({
-      type: SpreadsheetImportStepType.importData,
-      recordsToImportCount: calculatedData.validStructuredRows.length,
-    });
-    hideStepBar();
+    const startImportStep = () => {
+      setCurrentStepState({
+        type: SpreadsheetImportStepType.importData,
+        recordsToImportCount: calculatedData.validStructuredRows.length,
+      });
+      hideStepBar();
+    };
 
-    await onSubmit(calculatedData, file);
-    onClose();
+    try {
+      if (!submitBeforeImportStep) {
+        startImportStep();
+      }
+
+      const submitResult = await onSubmit(calculatedData, file);
+      if (submitResult === false) {
+        return;
+      }
+
+      if (submitBeforeImportStep) {
+        startImportStep();
+      }
+      onClose();
+    } finally {
+      submittingRef.current = false;
+      setIsSubmitting(false);
+    }
   };
   const onContinue = () => {
     const invalidData = data.find((value) => {
@@ -266,7 +294,9 @@ export const ValidationStep = ({
     } else {
       enqueueDialog({
         title: t`Finish flow with errors`,
-        message: t`There are still some rows that contain errors. Rows with errors will be ignored when submitting.`,
+        message:
+          invalidRowsSubmitMessage ??
+          t`There are still some rows that contain errors. Rows with errors will be ignored when submitting.`,
         buttons: [
           { title: t`Cancel` },
           {
@@ -335,6 +365,7 @@ export const ValidationStep = ({
         onContinue={onContinue}
         onBack={onBack}
         continueTitle={t`Confirm`}
+        isLoading={isSubmitting}
       />
     </>
   );

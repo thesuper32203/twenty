@@ -1,5 +1,6 @@
 import {
   type ActorMetadata,
+  type AddressMetadata,
   type EmailsMetadata,
   type FullNameMetadata,
   type LinksMetadata,
@@ -19,12 +20,14 @@ import { type NoteTargetWorkspaceEntity } from 'src/modules/note/standard-object
 import { type CalendarEventTargetWorkspaceEntity } from 'src/modules/calendar/common/standard-objects/calendar-event-target.workspace-entity';
 import { type MessageThreadTargetWorkspaceEntity } from 'src/modules/messaging/common/standard-objects/message-thread-target.workspace-entity';
 import { type OpportunityWorkspaceEntity } from 'src/modules/opportunity/standard-objects/opportunity.workspace-entity';
+import { type PersonPropertyWorkspaceEntity } from 'src/modules/property/standard-objects/person-property.workspace-entity';
 import { type TaskTargetWorkspaceEntity } from 'src/modules/task/standard-objects/task-target.workspace-entity';
 import { type TimelineActivityWorkspaceEntity } from 'src/modules/timeline/standard-objects/timeline-activity.workspace-entity';
 
 export class PersonWorkspaceEntity extends BaseWorkspaceEntity {
   name: FullNameMetadata | null;
   emails: EmailsMetadata;
+  propertyAddress: AddressMetadata;
   linkedinLink: LinksMetadata | null;
   jobTitle: string | null;
   /** @deprecated Use `phones` field instead */
@@ -39,6 +42,7 @@ export class PersonWorkspaceEntity extends BaseWorkspaceEntity {
   company: EntityRelation<CompanyWorkspaceEntity> | null;
   companyId: string | null;
   pointOfContactForOpportunities: EntityRelation<OpportunityWorkspaceEntity[]>;
+  propertyLinks: EntityRelation<PersonPropertyWorkspaceEntity[]>;
   taskTargets: EntityRelation<TaskTargetWorkspaceEntity[]>;
   noteTargets: EntityRelation<NoteTargetWorkspaceEntity[]>;
   agentChatThreadTargets: EntityRelation<

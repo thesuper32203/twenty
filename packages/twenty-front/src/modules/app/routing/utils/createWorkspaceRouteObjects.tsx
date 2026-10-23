@@ -69,6 +69,12 @@ const NotFound = lazy(() =>
   })),
 );
 
+const HomeownerImportsPage = lazy(() =>
+  import('~/pages/imports/HomeownerImportsPage').then((module) => ({
+    default: module.HomeownerImportsPage,
+  })),
+);
+
 type CreateWorkspaceRouteObjectsArgs = {
   isAdminPageEnabled?: boolean;
 };
@@ -101,6 +107,14 @@ export const createWorkspaceRouteObjects = ({
       element: (
         <LazyRoute fallback={<RecordIndexSkeletonLoader />}>
           <AgentCoreIndexPage />
+        </LazyRoute>
+      ),
+    },
+    {
+      path: AppPath.Imports,
+      element: (
+        <LazyRoute>
+          <HomeownerImportsPage />
         </LazyRoute>
       ),
     },

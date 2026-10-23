@@ -95,6 +95,32 @@ describe('computeStandardRecordFormFlatEntities', () => {
     expect(fieldNames).not.toContain('noteTargets');
   });
 
+  it('should show only wholesale contact fields in the default People creation form', () => {
+    const fieldNames = getRecordFormWidgetFieldNames(
+      STANDARD_OBJECT_UNIVERSAL_IDENTIFIERS.person,
+    );
+    const personFormWidgets = Object.values(
+      allFlatEntityMaps.flatPageLayoutWidgetMaps.byUniversalIdentifier,
+    )
+      .filter(isDefined)
+      .filter(
+        (widget) =>
+          widget.objectMetadataUniversalIdentifier ===
+            STANDARD_OBJECT_UNIVERSAL_IDENTIFIERS.person &&
+          widget.type === WidgetType.FORM_FIELD,
+      );
+
+    expect(fieldNames.slice(0, 4)).toEqual([
+      'name',
+      'phones',
+      'emails',
+      'propertyAddress',
+    ]);
+    expect(personFormWidgets.filter((widget) => widget.isActive)).toHaveLength(
+      4,
+    );
+  });
+
   it('should put the label identifier first and drop system fields', () => {
     const fieldNames = getRecordFormWidgetFieldNames(
       STANDARD_OBJECT_UNIVERSAL_IDENTIFIERS.company,

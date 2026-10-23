@@ -8,6 +8,7 @@ import { type FieldAddressValue } from '@/object-record/record-field/ui/types/Fi
 import { Field } from 'twenty-ui/primitives/input';
 import { t } from '@lingui/core/macro';
 import { normalizeAddressFieldValueForPersist } from '@/object-record/record-field/ui/utils/normalizeAddressFieldValueForPersist';
+import { type AllowedAddressSubField } from 'twenty-shared/types';
 
 type FormAddressFieldInputProps = {
   label?: string;
@@ -16,6 +17,8 @@ type FormAddressFieldInputProps = {
   VariablePicker?: VariablePickerComponent;
   readonly?: boolean;
   subFieldPlaceholders?: Partial<Record<keyof FieldAddressDraftValue, string>>;
+  subFields?: AllowedAddressSubField[] | null;
+  postcodeLabel?: string;
 };
 
 export const FormAddressFieldInput = ({
@@ -25,7 +28,12 @@ export const FormAddressFieldInput = ({
   readonly,
   VariablePicker,
   subFieldPlaceholders,
+  subFields,
+  postcodeLabel,
 }: FormAddressFieldInputProps) => {
+  const isSubFieldVisible = (subField: AllowedAddressSubField) =>
+    !subFields || subFields.includes(subField);
+
   const handleChange =
     (field: keyof FieldAddressDraftValue) => (updatedAddressPart: string) => {
       const updatedAddress = {
@@ -46,57 +54,73 @@ export const FormAddressFieldInput = ({
     <FormFieldInputContainer>
       {label ? <Field.Label>{label}</Field.Label> : null}
       <FormNestedFieldInputContainer>
-        <FormTextFieldInput
-          label={t`Address 1`}
-          defaultValue={defaultValue?.addressStreet1 ?? ''}
-          onChange={handleChange('addressStreet1')}
-          readonly={readonly}
-          VariablePicker={VariablePicker}
-          placeholder={
-            subFieldPlaceholders?.addressStreet1 ?? t`Street address`
-          }
-        />
-        <FormTextFieldInput
-          label={t`Address 2`}
-          defaultValue={defaultValue?.addressStreet2 ?? ''}
-          onChange={handleChange('addressStreet2')}
-          readonly={readonly}
-          VariablePicker={VariablePicker}
-          placeholder={
-            subFieldPlaceholders?.addressStreet2 ?? t`Street address 2`
-          }
-        />
-        <FormTextFieldInput
-          label={t`City`}
-          defaultValue={defaultValue?.addressCity ?? ''}
-          onChange={handleChange('addressCity')}
-          readonly={readonly}
-          VariablePicker={VariablePicker}
-          placeholder={subFieldPlaceholders?.addressCity ?? t`City`}
-        />
-        <FormTextFieldInput
-          label={t`State`}
-          defaultValue={defaultValue?.addressState ?? ''}
-          onChange={handleChange('addressState')}
-          readonly={readonly}
-          VariablePicker={VariablePicker}
-          placeholder={subFieldPlaceholders?.addressState ?? t`State`}
-        />
-        <FormTextFieldInput
-          label={t`Post Code`}
-          defaultValue={defaultValue?.addressPostcode ?? ''}
-          onChange={handleChange('addressPostcode')}
-          readonly={readonly}
-          VariablePicker={VariablePicker}
-          placeholder={subFieldPlaceholders?.addressPostcode ?? t`Post Code`}
-        />
-        <FormCountrySelectInput
-          label={t`Country`}
-          selectedCountryName={defaultValue?.addressCountry ?? ''}
-          onChange={handleChange('addressCountry')}
-          readonly={readonly}
-          VariablePicker={VariablePicker}
-        />
+        {isSubFieldVisible('addressStreet1') && (
+          <FormTextFieldInput
+            label={t`Address 1`}
+            defaultValue={defaultValue?.addressStreet1 ?? ''}
+            onChange={handleChange('addressStreet1')}
+            readonly={readonly}
+            VariablePicker={VariablePicker}
+            placeholder={
+              subFieldPlaceholders?.addressStreet1 ?? t`Street address`
+            }
+          />
+        )}
+        {isSubFieldVisible('addressStreet2') && (
+          <FormTextFieldInput
+            label={t`Address 2`}
+            defaultValue={defaultValue?.addressStreet2 ?? ''}
+            onChange={handleChange('addressStreet2')}
+            readonly={readonly}
+            VariablePicker={VariablePicker}
+            placeholder={
+              subFieldPlaceholders?.addressStreet2 ?? t`Street address 2`
+            }
+          />
+        )}
+        {isSubFieldVisible('addressCity') && (
+          <FormTextFieldInput
+            label={t`City`}
+            defaultValue={defaultValue?.addressCity ?? ''}
+            onChange={handleChange('addressCity')}
+            readonly={readonly}
+            VariablePicker={VariablePicker}
+            placeholder={subFieldPlaceholders?.addressCity ?? t`City`}
+          />
+        )}
+        {isSubFieldVisible('addressState') && (
+          <FormTextFieldInput
+            label={t`State`}
+            defaultValue={defaultValue?.addressState ?? ''}
+            onChange={handleChange('addressState')}
+            readonly={readonly}
+            VariablePicker={VariablePicker}
+            placeholder={subFieldPlaceholders?.addressState ?? t`State`}
+          />
+        )}
+        {isSubFieldVisible('addressPostcode') && (
+          <FormTextFieldInput
+            label={postcodeLabel ?? t`Post Code`}
+            defaultValue={defaultValue?.addressPostcode ?? ''}
+            onChange={handleChange('addressPostcode')}
+            readonly={readonly}
+            VariablePicker={VariablePicker}
+            placeholder={
+              subFieldPlaceholders?.addressPostcode ??
+              postcodeLabel ??
+              t`Post Code`
+            }
+          />
+        )}
+        {isSubFieldVisible('addressCountry') && (
+          <FormCountrySelectInput
+            label={t`Country`}
+            selectedCountryName={defaultValue?.addressCountry ?? ''}
+            onChange={handleChange('addressCountry')}
+            readonly={readonly}
+            VariablePicker={VariablePicker}
+          />
+        )}
       </FormNestedFieldInputContainer>
     </FormFieldInputContainer>
   );

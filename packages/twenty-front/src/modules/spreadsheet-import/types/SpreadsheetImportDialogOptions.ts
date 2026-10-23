@@ -31,7 +31,9 @@ export type SpreadsheetImportDialogOptions = {
   onSubmit: (
     validationResult: SpreadsheetImportImportValidationResult,
     file: File,
-  ) => Promise<void>;
+  ) => Promise<void | false>;
+  submitBeforeImportStep?: boolean;
+  invalidRowsSubmitMessage?: string;
   onAbortSubmit?: () => void;
   // Allows submitting with errors. Default: true
   allowInvalidSubmit?: boolean;
