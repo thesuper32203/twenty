@@ -31,12 +31,14 @@ type RecordTableWithWrappersProps = {
   objectNameSingular: string;
   recordTableId: string;
   viewBarId: string;
+  isPaginated?: boolean;
 };
 
 export const RecordTableWithWrappers = ({
   objectNameSingular,
   recordTableId,
   viewBarId,
+  isPaginated = false,
 }: RecordTableWithWrappersProps) => {
   useRecordTableSelectAllHotkeys({
     recordTableId,
@@ -67,6 +69,9 @@ export const RecordTableWithWrappers = ({
           <StyledRecordTablePrintBoundary>
             <ScrollWrapper
               componentInstanceId={`record-table-scroll-${recordTableId}`}
+              className={
+                isPaginated ? 'record-table-paginated-scroll' : undefined
+              }
             >
               <RecordTableRecordLimitReloadEffect />
               <RecordTable />

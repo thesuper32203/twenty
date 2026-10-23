@@ -1,4 +1,7 @@
 import { useRecordIndexTableLazyQuery } from '@/object-record/record-index/hooks/useRecordIndexTableLazyQuery';
+import { usePeopleTablePagination } from '@/object-record/record-index/hooks/usePeopleTablePagination';
+import { useCurrentRecordGroupDefinition } from '@/object-record/record-group/hooks/useCurrentRecordGroupDefinition';
+import { useRecordIndexContextOrThrow } from '@/object-record/record-index/contexts/RecordIndexContext';
 import { useRecordTableContextOrThrow } from '@/object-record/record-table/contexts/RecordTableContext';
 
 import { visibleRecordFieldsComponentSelector } from '@/object-record/record-field/states/visibleRecordFieldsComponentSelector';
@@ -15,12 +18,23 @@ import { useAtomFamilyStateValue } from '@/ui/utilities/state/jotai/hooks/useAto
 import { useGetCurrentViewOnly } from '@/views/hooks/useGetCurrentViewOnly';
 import isEmpty from 'lodash.isempty';
 import { useEffect, useState } from 'react';
+import { CoreObjectNameSingular } from 'twenty-shared/types';
+import { isDefined } from 'twenty-shared/utils';
 
 // TODO: see if we can merge the initial and load more processes, to have only one load at scroll index effect
 export const RecordTableVirtualizedInitialDataLoadEffect = () => {
   const { recordTableId, objectNameSingular } = useRecordTableContextOrThrow();
 
   const { queryIdentifier } = useRecordIndexTableLazyQuery(objectNameSingular);
+  const { recordLimit } = useRecordIndexContextOrThrow();
+  const currentRecordGroupDefinition = useCurrentRecordGroupDefinition();
+  const { pagination } = usePeopleTablePagination(queryIdentifier);
+  const tableQueryIdentifier =
+    objectNameSingular === CoreObjectNameSingular.Person &&
+    !isDefined(recordLimit) &&
+    !isDefined(currentRecordGroupDefinition)
+      ? `${queryIdentifier}:${pagination.pageIndex}:${pagination.pageSize}`
+      : queryIdentifier;
 
   const [lastRecordTableQueryIdentifier, setLastRecordTableQueryIdentifier] =
     useAtomComponentState(lastRecordTableQueryIdentifierComponentState);
@@ -78,15 +92,15 @@ export const RecordTableVirtualizedInitialDataLoadEffect = () => {
     (async () => {
       if ((currentView?.id ?? null) !== lastContextStoreVirtualizedViewId) {
         setLastContextStoreVirtualizedViewId(currentView?.id ?? null);
-        setLastRecordTableQueryIdentifier(queryIdentifier);
+        setLastRecordTableQueryIdentifier(tableQueryIdentifier);
         setLastContextStoreVirtualizedVisibleRecordFields(visibleRecordFields);
 
         await triggerInitialRecordTableDataLoad();
       } else if (
-        queryIdentifier !== lastRecordTableQueryIdentifier &&
+        tableQueryIdentifier !== lastRecordTableQueryIdentifier &&
         !isFetchingMoreRecords
       ) {
-        setLastRecordTableQueryIdentifier(queryIdentifier);
+        setLastRecordTableQueryIdentifier(tableQueryIdentifier);
 
         await triggerInitialRecordTableDataLoad();
       } else if (recordTableWentFromEmptyToNotEmpty) {
@@ -117,7 +131,7 @@ export const RecordTableVirtualizedInitialDataLoadEffect = () => {
   }, [
     recordTableWentFromEmptyToNotEmpty,
     setRecordTableWentFromEmptyToNotEmpty,
-    queryIdentifier,
+    tableQueryIdentifier,
     lastRecordTableQueryIdentifier,
     triggerInitialRecordTableDataLoad,
     setLastRecordTableQueryIdentifier,

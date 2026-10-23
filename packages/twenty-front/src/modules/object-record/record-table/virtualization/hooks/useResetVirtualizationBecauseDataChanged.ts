@@ -6,6 +6,9 @@ import { useLazyFindManyRecords } from '@/object-record/hooks/useLazyFindManyRec
 import { useRelevantRecordsGqlFields } from '@/object-record/record-field/hooks/useRelevantRecordsGqlFields';
 
 import { useFindManyRecordIndexTableParams } from '@/object-record/record-index/hooks/useFindManyRecordIndexTableParams';
+import { useRecordIndexContextOrThrow } from '@/object-record/record-index/contexts/RecordIndexContext';
+import { useCurrentRecordGroupDefinition } from '@/object-record/record-group/hooks/useCurrentRecordGroupDefinition';
+import { useTriggerInitialRecordTableDataLoad } from '@/object-record/record-table/virtualization/hooks/useTriggerInitialRecordTableDataLoad';
 import { useTriggerFetchPages } from '@/object-record/record-table/virtualization/hooks/useTriggerFetchPages';
 import { dataLoadingStatusByRealIndexComponentState } from '@/object-record/record-table/virtualization/states/dataLoadingStatusByRealIndexComponentState';
 import { dataPagesLoadedComponentState } from '@/object-record/record-table/virtualization/states/dataPagesLoadedComponentState';
@@ -16,11 +19,20 @@ import { getVirtualizationOverscanWindow } from '@/object-record/record-table/vi
 import { useScrollWrapperHTMLElement } from '@/ui/utilities/scroll/hooks/useScrollWrapperHTMLElement';
 import { useAtomComponentStateCallbackState } from '@/ui/utilities/state/jotai/hooks/useAtomComponentStateCallbackState';
 import { isDefined } from 'twenty-shared/utils';
+import { CoreObjectNameSingular } from 'twenty-shared/types';
 import { sleep } from '~/utils/sleep';
 
 export const useResetVirtualizationBecauseDataChanged = (
   objectNameSingular: string,
 ) => {
+  const { recordLimit } = useRecordIndexContextOrThrow();
+  const currentRecordGroupDefinition = useCurrentRecordGroupDefinition();
+  const isPeoplePaginationEnabled =
+    objectNameSingular === CoreObjectNameSingular.Person &&
+    !isDefined(recordLimit) &&
+    !isDefined(currentRecordGroupDefinition);
+  const { triggerInitialRecordTableDataLoad } =
+    useTriggerInitialRecordTableDataLoad();
   const { objectMetadataItem } = useObjectMetadataItem({
     objectNameSingular,
   });
@@ -140,12 +152,22 @@ export const useResetVirtualizationBecauseDataChanged = (
   ]);
 
   const resetVirtualizationBecauseDataChanged = useCallback(async () => {
+    if (isPeoplePaginationEnabled) {
+      await triggerInitialRecordTableDataLoad();
+      return;
+    }
+
     await resetVirtualization();
 
     await sleep(50);
 
     await triggerFetchPagesWithoutDebounce();
-  }, [resetVirtualization, triggerFetchPagesWithoutDebounce]);
+  }, [
+    isPeoplePaginationEnabled,
+    triggerInitialRecordTableDataLoad,
+    resetVirtualization,
+    triggerFetchPagesWithoutDebounce,
+  ]);
 
   return {
     resetVirtualizationBecauseDataChanged,

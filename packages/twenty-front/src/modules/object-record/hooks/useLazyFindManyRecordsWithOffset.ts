@@ -16,10 +16,11 @@ import { type ObjectRecord } from '@/object-record/types/ObjectRecord';
 type UseLazyFindManyRecordsWithOffsetParams = Pick<
   UseFindManyRecordsParams<ObjectRecord>,
   'objectNameSingular'
->;
+> & { fetchPolicy?: 'cache-first' | 'network-only' };
 
 export const useLazyFindManyRecordsWithOffset = ({
   objectNameSingular,
+  fetchPolicy = 'cache-first',
 }: UseLazyFindManyRecordsWithOffsetParams) => {
   const { objectMetadataItem } = useObjectMetadataItem({
     objectNameSingular,
@@ -62,6 +63,7 @@ export const useLazyFindManyRecordsWithOffset = ({
       const result =
         await apolloCoreClient.query<RecordGqlOperationFindManyResult>({
           query: findManyRecordsQuery,
+          fetchPolicy,
           variables: {
             ...params,
             limit,
@@ -88,6 +90,8 @@ export const useLazyFindManyRecordsWithOffset = ({
       return {
         data: result?.data,
         records,
+        totalCount:
+          result?.data?.[objectMetadataItem.namePlural]?.totalCount ?? 0,
         error: result?.error,
       };
     },
@@ -98,6 +102,7 @@ export const useLazyFindManyRecordsWithOffset = ({
       params,
       objectMetadataItem.namePlural,
       handleFindManyRecordsError,
+      fetchPolicy,
     ],
   );
 
