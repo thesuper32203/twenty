@@ -2,6 +2,8 @@ import { useCallback } from 'react';
 import { useStore } from 'jotai';
 
 import { useLazyFindManyRecordsWithOffset } from '@/object-record/hooks/useLazyFindManyRecordsWithOffset';
+import { useRecordIndexContextOrThrow } from '@/object-record/record-index/contexts/RecordIndexContext';
+import { useCurrentRecordGroupDefinition } from '@/object-record/record-group/hooks/useCurrentRecordGroupDefinition';
 import { useUpsertRecordsInStore } from '@/object-record/record-store/hooks/useUpsertRecordsInStore';
 import { useRecordTableContextOrThrow } from '@/object-record/record-table/contexts/RecordTableContext';
 import { TABLE_VIRTUALIZATION_NUMBER_OF_RECORDS_PER_PAGE } from '@/object-record/record-table/virtualization/constants/TableVirtualizationNumberOfRecordsPerPage';
@@ -15,6 +17,7 @@ import { getVirtualizationOverscanWindow } from '@/object-record/record-table/vi
 import { useScrollWrapperHTMLElement } from '@/ui/utilities/scroll/hooks/useScrollWrapperHTMLElement';
 import { useAtomComponentStateCallbackState } from '@/ui/utilities/state/jotai/hooks/useAtomComponentStateCallbackState';
 import { getContiguousIncrementalValues, isDefined } from 'twenty-shared/utils';
+import { CoreObjectNameSingular } from 'twenty-shared/types';
 import { useDebouncedCallback } from 'use-debounce';
 
 const TIME_BETWEEN_UI_BATCH_UPDATE = 25;
@@ -23,6 +26,12 @@ const TIME_BETWEEN_TWO_REQUETS = 25;
 
 export const useTriggerFetchPages = () => {
   const { objectNameSingular } = useRecordTableContextOrThrow();
+  const { recordLimit } = useRecordIndexContextOrThrow();
+  const currentRecordGroupDefinition = useCurrentRecordGroupDefinition();
+  const isPeoplePaginationEnabled =
+    objectNameSingular === CoreObjectNameSingular.Person &&
+    !isDefined(recordLimit) &&
+    !isDefined(currentRecordGroupDefinition);
   const { scrollWrapperHTMLElement } = useScrollWrapperHTMLElement();
 
   const { upsertRecordsInStore } = useUpsertRecordsInStore();
@@ -53,6 +62,10 @@ export const useTriggerFetchPages = () => {
   const store = useStore();
 
   const triggerFetchPagesWithoutDebounce = useCallback(async () => {
+    if (isPeoplePaginationEnabled) {
+      return;
+    }
+
     const lowDetailsActivated = store.get(lowDetailsActivatedCallbackState);
 
     if (lowDetailsActivated) {
@@ -178,6 +191,7 @@ export const useTriggerFetchPages = () => {
     scrollWrapperHTMLElement,
     lowDetailsActivatedCallbackState,
     store,
+    isPeoplePaginationEnabled,
   ]);
 
   const triggerFetchPages = useDebouncedCallback(

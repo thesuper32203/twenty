@@ -3,6 +3,9 @@ import { useCallback } from 'react';
 
 import { useRecordIndexContextOrThrow } from '@/object-record/record-index/contexts/RecordIndexContext';
 import { useRecordIndexTableLazyQuery } from '@/object-record/record-index/hooks/useRecordIndexTableLazyQuery';
+import { usePeopleTablePagination } from '@/object-record/record-index/hooks/usePeopleTablePagination';
+import { useCurrentRecordGroupDefinition } from '@/object-record/record-group/hooks/useCurrentRecordGroupDefinition';
+import { useLazyFindManyRecordsWithOffset } from '@/object-record/hooks/useLazyFindManyRecordsWithOffset';
 import { recordIndexRecordIdsByGroupComponentFamilyState } from '@/object-record/record-index/states/recordIndexRecordIdsByGroupComponentFamilyState';
 import {
   NO_RECORD_GROUP_FAMILY_KEY,
@@ -35,14 +38,26 @@ import { useAtomComponentSelectorCallbackState } from '@/ui/utilities/state/jota
 import { useAtomComponentStateCallbackState } from '@/ui/utilities/state/jotai/hooks/useAtomComponentStateCallbackState';
 import { useSetAtomComponentState } from '@/ui/utilities/state/jotai/hooks/useSetAtomComponentState';
 import { isDefined, isNonEmptyArray } from 'twenty-shared/utils';
+import { CoreObjectNameSingular } from 'twenty-shared/types';
 
 export const useTriggerInitialRecordTableDataLoad = () => {
   const { recordTableId, objectNameSingular } = useRecordTableContextOrThrow();
 
   const { recordLimit } = useRecordIndexContextOrThrow();
+  const currentRecordGroupDefinition = useCurrentRecordGroupDefinition();
+  const isPeoplePaginationEnabled =
+    objectNameSingular === CoreObjectNameSingular.Person &&
+    !isDefined(recordLimit) &&
+    !isDefined(currentRecordGroupDefinition);
 
-  const { findManyRecordsLazy } =
+  const { findManyRecordsLazy, queryIdentifier } =
     useRecordIndexTableLazyQuery(objectNameSingular);
+  const { findManyRecordsLazyWithOffset } = useLazyFindManyRecordsWithOffset({
+    objectNameSingular,
+    fetchPolicy: 'network-only',
+  });
+  const { pagination, setPagination } =
+    usePeopleTablePagination(queryIdentifier);
 
   const isInitializingVirtualTableDataLoadingCallbackState =
     useAtomComponentStateCallbackState(
@@ -179,12 +194,17 @@ export const useTriggerInitialRecordTableDataLoad = () => {
           );
         };
 
-        let findManyRecordsResult: Awaited<
-          ReturnType<typeof findManyRecordsLazy>
-        >;
+        let findManyRecordsResult:
+          | Awaited<ReturnType<typeof findManyRecordsLazy>>
+          | Awaited<ReturnType<typeof findManyRecordsLazyWithOffset>>;
 
         try {
-          findManyRecordsResult = await findManyRecordsLazy();
+          findManyRecordsResult = isPeoplePaginationEnabled
+            ? await findManyRecordsLazyWithOffset(
+                pagination.pageSize,
+                pagination.pageIndex * pagination.pageSize,
+              )
+            : await findManyRecordsLazy();
         } finally {
           clearLoadedRecords();
           resetVirtualizedRowTreadmill();
@@ -192,11 +212,25 @@ export const useTriggerInitialRecordTableDataLoad = () => {
 
         const { records, totalCount } = findManyRecordsResult;
 
+        if (isPeoplePaginationEnabled) {
+          setPagination({
+            queryIdentifier,
+            pageIndex: Math.min(
+              pagination.pageIndex,
+              Math.max(0, Math.ceil(totalCount / pagination.pageSize) - 1),
+            ),
+            pageSize: pagination.pageSize,
+            totalCount,
+          });
+        }
+
         store.set(
           totalNumberOfRecordsToVirtualizeCallbackState,
-          isDefined(recordLimit)
-            ? Math.min(totalCount, recordLimit)
-            : totalCount,
+          isPeoplePaginationEnabled
+            ? (records?.length ?? 0)
+            : isDefined(recordLimit)
+              ? Math.min(totalCount, recordLimit)
+              : totalCount,
         );
 
         if (isDefined(records)) {
@@ -255,6 +289,12 @@ export const useTriggerInitialRecordTableDataLoad = () => {
       reapplyRowSelection,
       recordTableId,
       recordLimit,
+      isPeoplePaginationEnabled,
+      findManyRecordsLazyWithOffset,
+      pagination.pageIndex,
+      pagination.pageSize,
+      queryIdentifier,
+      setPagination,
     ],
   );
 
