@@ -72,6 +72,40 @@ describe('useOpenCreateActivityDrawer', () => {
     expect(jotaiStore.get(isUpsertingActivityInDBState.atom)).toBe(false);
   });
 
+  it('starts a follow-up task with its title', async () => {
+    const { result } = renderHook(
+      () =>
+        useOpenCreateActivityDrawer({
+          activityObjectNameSingular: CoreObjectNameSingular.Task,
+        }),
+      { wrapper: Wrapper },
+    );
+
+    await act(async () => {
+      await result.current({
+        targetableObjects: [
+          {
+            id: 'opportunity-id',
+            targetObjectNameSingular: CoreObjectNameSingular.Opportunity,
+          },
+        ],
+        defaultTaskTitle: 'Follow up with seller',
+      });
+    });
+
+    expect(mockCreateOneNote).toHaveBeenCalledWith({
+      assigneeId: undefined,
+      title: 'Follow up with seller',
+      position: 'last',
+    });
+    expect(mockCreateManyNoteTargets).toHaveBeenCalledWith({
+      recordsToCreate: [
+        expect.objectContaining({ targetOpportunityId: 'opportunity-id' }),
+      ],
+      upsert: true,
+    });
+  });
+
   it('should create every requested target through junction metadata', async () => {
     const targetableObjects = [
       {

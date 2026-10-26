@@ -856,14 +856,24 @@ export const STANDARD_OBJECTS = {
     universalIdentifier: STANDARD_OBJECT_UNIVERSAL_IDENTIFIERS.property,
     fields: STANDARD_OBJECT_FIELDS.property,
     indexes: {
-      normalizedAddressKeyIndex: { universalIdentifier: 'dba1c975-1b2f-5c5e-a30c-e7fd493f7072' },
-      searchVectorGinIndex: { universalIdentifier: '53f8eecd-5afc-50e2-bd9a-68866dc239ab' },
+      normalizedAddressKeyIndex: {
+        universalIdentifier: 'dba1c975-1b2f-5c5e-a30c-e7fd493f7072',
+      },
+      searchVectorGinIndex: {
+        universalIdentifier: '53f8eecd-5afc-50e2-bd9a-68866dc239ab',
+      },
     },
     views: {
       allProperties: buildStandardObjectIndexView({
-        objectUniversalIdentifier: STANDARD_OBJECT_UNIVERSAL_IDENTIFIERS.property,
+        objectUniversalIdentifier:
+          STANDARD_OBJECT_UNIVERSAL_IDENTIFIERS.property,
         fields: STANDARD_OBJECT_FIELDS.property,
-        viewFieldNames: ['name', 'address', 'normalizedAddressKey', 'createdAt'],
+        viewFieldNames: [
+          'name',
+          'address',
+          'normalizedAddressKey',
+          'createdAt',
+        ],
       }),
     },
   },
@@ -871,7 +881,9 @@ export const STANDARD_OBJECTS = {
     universalIdentifier: STANDARD_OBJECT_UNIVERSAL_IDENTIFIERS.personProperty,
     fields: STANDARD_OBJECT_FIELDS.personProperty,
     indexes: {
-      personPropertyUniqueIndex: { universalIdentifier: '95545742-2ad8-58fb-99db-371c06b7d2b6' },
+      personPropertyUniqueIndex: {
+        universalIdentifier: '95545742-2ad8-58fb-99db-371c06b7d2b6',
+      },
     },
     views: {},
   },
@@ -879,8 +891,12 @@ export const STANDARD_OBJECTS = {
     universalIdentifier: STANDARD_OBJECT_UNIVERSAL_IDENTIFIERS.importBatch,
     fields: STANDARD_OBJECT_FIELDS.importBatch,
     indexes: {
-      messageListIndex: { universalIdentifier: '4cb616b8-f185-549a-9ad5-b099f2e2853f' },
-      checksumUniqueIndex: { universalIdentifier: '6b6d21ed-3770-4fa6-ac95-a1760330a250' },
+      messageListIndex: {
+        universalIdentifier: '4cb616b8-f185-549a-9ad5-b099f2e2853f',
+      },
+      checksumUniqueIndex: {
+        universalIdentifier: '6b6d21ed-3770-4fa6-ac95-a1760330a250',
+      },
     },
     views: {},
   },
@@ -888,7 +904,9 @@ export const STANDARD_OBJECTS = {
     universalIdentifier: STANDARD_OBJECT_UNIVERSAL_IDENTIFIERS.importRowResult,
     fields: STANDARD_OBJECT_FIELDS.importRowResult,
     indexes: {
-      batchRowUniqueIndex: { universalIdentifier: 'f67e09e0-df7b-5e48-814c-688fec81469f' },
+      batchRowUniqueIndex: {
+        universalIdentifier: 'f67e09e0-df7b-5e48-814c-688fec81469f',
+      },
     },
     views: {},
   },
@@ -896,7 +914,9 @@ export const STANDARD_OBJECTS = {
     universalIdentifier: STANDARD_OBJECT_UNIVERSAL_IDENTIFIERS.opportunity,
     fields: STANDARD_OBJECT_FIELDS.opportunity,
     indexes: {
-      propertyIdIndex: { universalIdentifier: '87ceaed8-4581-53b9-873d-f7657722e549' },
+      propertyIdIndex: {
+        universalIdentifier: '87ceaed8-4581-53b9-873d-f7657722e549',
+      },
       pointOfContactIdIndex: {
         universalIdentifier: 'b8c2a673-a981-4357-a43d-313a358e4daa',
       },
@@ -946,24 +966,40 @@ export const STANDARD_OBJECTS = {
           pointOfContact: {
             universalIdentifier: '20202020-af04-4a04-8a04-0aa0b2ca2bb4',
           },
-          property: { universalIdentifier: 'a1377e8e-a901-540d-98fa-b0f0cf3eca16' },
+          property: {
+            universalIdentifier: 'a1377e8e-a901-540d-98fa-b0f0cf3eca16',
+          },
+          mao: { universalIdentifier: 'f0e8d4b4-813e-4fd7-94a0-bbda89a14b01' },
+          offer: {
+            universalIdentifier: 'f0e8d4b4-813e-4fd7-94a0-bbda89a14b02',
+          },
         },
         viewGroups: {
           new: {
             universalIdentifier: '20202020-af14-4a04-8a04-0aa0b2ca2bf1',
           },
-          screening: {
+          contacted: {
             universalIdentifier: '20202020-af14-4a04-8a04-0aa0b2ca2bf2',
           },
-          meeting: {
+          followUp: {
             universalIdentifier: '20202020-af14-4a04-8a04-0aa0b2ca2bf3',
           },
-          proposal: {
+          offer: {
             universalIdentifier: '20202020-af14-4a04-8a04-0aa0b2ca2bf4',
           },
-          customer: {
+          accepted: {
             universalIdentifier: '20202020-af14-4a04-8a04-0aa0b2ca2bf5',
           },
+          declined: {
+            universalIdentifier: 'f0e8d4b4-813e-4fd7-94a0-bbda89a13b06',
+          },
+          underContract: {
+            universalIdentifier: 'f0e8d4b4-813e-4fd7-94a0-bbda89a13b07',
+          },
+          closed: {
+            universalIdentifier: 'f0e8d4b4-813e-4fd7-94a0-bbda89a13b08',
+          },
+          lost: { universalIdentifier: 'f0e8d4b4-813e-4fd7-94a0-bbda89a13b09' },
         },
       },
       opportunityRecordPageFields: buildStandardObjectRecordPageFieldsView({
@@ -972,6 +1008,14 @@ export const STANDARD_OBJECTS = {
         fields: STANDARD_OBJECT_FIELDS.opportunity,
         viewFieldNames: [
           'amount',
+          'arv',
+          'repairs',
+          'askingPrice',
+          'sellerMinimum',
+          'mao',
+          'offer',
+          'assignmentFee',
+          'projectedProfit',
           'closeDate',
           'stage',
           'company',

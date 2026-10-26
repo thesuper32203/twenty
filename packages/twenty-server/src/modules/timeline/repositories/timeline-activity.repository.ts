@@ -19,6 +19,7 @@ import {
   buildTimelineActivityMergeKeyCandidates,
 } from 'src/modules/timeline/utils/build-timeline-activity-merge-key.util';
 import { parseLinkedTimelineActivityHappensAt } from 'src/modules/timeline/utils/resolve-timeline-activity-happens-at.util';
+import { shouldPreserveOpportunityStageChange } from 'src/modules/timeline/utils/should-preserve-opportunity-stage-change.util';
 import { buildTimelineActivityRelatedMorphFieldMetadataName } from 'src/modules/timeline/utils/timeline-activity-related-morph-field-metadata-name-builder.util';
 
 type TimelineActivityPayloadWorkspaceIdAndObjectSingularName = {
@@ -218,23 +219,28 @@ export class TimelineActivityRepository {
           }
 
           for (const payload of payloads) {
-            const recentTimelineActivity =
-              buildTimelineActivityMergeKeyCandidates({
-                recordId: payload.recordId,
-                workspaceMemberId: payload.workspaceMemberId,
-                timelineActivityTypeId: payload.timelineActivityTypeId,
-                timelineActivityTypeSnapshot:
-                  payload.timelineActivityTypeSnapshot,
-              })
-                .flatMap(
-                  (mergeKey) =>
-                    recentTimelineActivitiesByMergeKey.get(mergeKey) ?? [],
-                )
-                .find(
-                  (timelineActivity) =>
-                    !isDefined(payload.linkedRecordId) ||
-                    timelineActivity.linkedRecordId === payload.linkedRecordId,
-                );
+            const recentTimelineActivity = shouldPreserveOpportunityStageChange(
+              objectSingularName,
+              payload.properties.diff,
+            )
+              ? undefined
+              : buildTimelineActivityMergeKeyCandidates({
+                  recordId: payload.recordId,
+                  workspaceMemberId: payload.workspaceMemberId,
+                  timelineActivityTypeId: payload.timelineActivityTypeId,
+                  timelineActivityTypeSnapshot:
+                    payload.timelineActivityTypeSnapshot,
+                })
+                  .flatMap(
+                    (mergeKey) =>
+                      recentTimelineActivitiesByMergeKey.get(mergeKey) ?? [],
+                  )
+                  .find(
+                    (timelineActivity) =>
+                      !isDefined(payload.linkedRecordId) ||
+                      timelineActivity.linkedRecordId ===
+                        payload.linkedRecordId,
+                  );
 
             if (isDefined(recentTimelineActivity)) {
               mergesToApply.push({

@@ -25,6 +25,7 @@ import { WorkflowModule } from 'src/modules/workflow/workflow.module';
 import { WorkspaceMemberModule } from 'src/modules/workspace-member/workspace-member.module';
 import { WholesaleImportModule } from 'src/modules/wholesale-import/wholesale-import.module';
 import { PropertyQueryHookModule } from 'src/modules/property/query-hooks/property-query-hook.module';
+import { OpportunityQueryHookModule } from 'src/modules/opportunity/query-hooks/opportunity-query-hook.module';
 import { ImportHistoryQueryHookModule } from 'src/modules/homeowner-import/query-hooks/import-history-query-hook.module';
 
 @Module({
@@ -37,6 +38,7 @@ import { ImportHistoryQueryHookModule } from 'src/modules/homeowner-import/query
     WorkspaceMemberModule,
     WholesaleImportModule,
     PropertyQueryHookModule,
+    OpportunityQueryHookModule,
     ImportHistoryQueryHookModule,
     EmailingModule,
     MessagingWebhooksModule,

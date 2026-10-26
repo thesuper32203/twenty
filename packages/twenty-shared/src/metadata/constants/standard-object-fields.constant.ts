@@ -932,7 +932,9 @@ export const STANDARD_OBJECT_FIELDS = {
     members: {
       universalIdentifier: '92df3493-91cf-4665-8587-1b08917d299b',
     },
-    importBatches: { universalIdentifier: 'f5af1394-e42c-57b8-8e90-de2bbdc97eb3' },
+    importBatches: {
+      universalIdentifier: 'f5af1394-e42c-57b8-8e90-de2bbdc97eb3',
+    },
     campaigns: {
       universalIdentifier: 'e098d838-31ab-4812-91a8-f055f45a6832',
     },
@@ -1175,46 +1177,80 @@ export const STANDARD_OBJECT_FIELDS = {
     },
   },
   property: {
-    ...buildStandardObjectSystemFields(STANDARD_OBJECT_UNIVERSAL_IDENTIFIERS.property),
+    ...buildStandardObjectSystemFields(
+      STANDARD_OBJECT_UNIVERSAL_IDENTIFIERS.property,
+    ),
     name: { universalIdentifier: 'f246bc20-0bb9-5897-91d7-e169043b1328' },
     address: { universalIdentifier: 'ab38be40-b196-59be-a6d0-3cc4d96a6a33' },
-    normalizedAddressKey: { universalIdentifier: '9a658741-86b7-597e-acf3-e888b356203d' },
+    normalizedAddressKey: {
+      universalIdentifier: '9a658741-86b7-597e-acf3-e888b356203d',
+    },
     owners: { universalIdentifier: '7b9cb8d5-1b62-5e16-af57-05ade76cd36c' },
-    opportunities: { universalIdentifier: 'bfd048a5-c019-5773-bd3d-35959605f634' },
+    opportunities: {
+      universalIdentifier: 'bfd048a5-c019-5773-bd3d-35959605f634',
+    },
   },
   personProperty: {
-    ...buildStandardObjectSystemFields(STANDARD_OBJECT_UNIVERSAL_IDENTIFIERS.personProperty),
+    ...buildStandardObjectSystemFields(
+      STANDARD_OBJECT_UNIVERSAL_IDENTIFIERS.personProperty,
+    ),
     person: { universalIdentifier: 'a4391e1c-0759-5a79-9815-afddfce8fbfc' },
     property: { universalIdentifier: '39a9a992-add0-5b76-af33-940f6567a663' },
     role: { universalIdentifier: '7777de26-29fe-549e-9ad9-4c8f18f8b489' },
   },
   importBatch: {
-    ...buildStandardObjectSystemFields(STANDARD_OBJECT_UNIVERSAL_IDENTIFIERS.importBatch),
+    ...buildStandardObjectSystemFields(
+      STANDARD_OBJECT_UNIVERSAL_IDENTIFIERS.importBatch,
+    ),
     name: { universalIdentifier: '1b1a8fda-8cfd-57d5-89b3-1d5944dd8533' },
-    originalFilename: { universalIdentifier: '03f30969-98a6-5f8c-87f2-faeecd1eb21d' },
+    originalFilename: {
+      universalIdentifier: '03f30969-98a6-5f8c-87f2-faeecd1eb21d',
+    },
     checksum: { universalIdentifier: '9e1d7c63-cdf6-5b62-97dc-704b99579043' },
-    payloadDigest: { universalIdentifier: '9209f44a-5b7d-4074-a7d9-2a8ad917dd68' },
+    payloadDigest: {
+      universalIdentifier: '9209f44a-5b7d-4074-a7d9-2a8ad917dd68',
+    },
     status: { universalIdentifier: '826b61bb-3eb9-51b2-b25b-50d2fa9a880f' },
-    overrideDuplicates: { universalIdentifier: '79a611dd-b6d9-584a-90c7-ac270119f7db' },
-    messageList: { universalIdentifier: '3b2bc03e-1277-5da1-80e3-0e3374db0ea1' },
+    overrideDuplicates: {
+      universalIdentifier: '79a611dd-b6d9-584a-90c7-ac270119f7db',
+    },
+    messageList: {
+      universalIdentifier: '3b2bc03e-1277-5da1-80e3-0e3374db0ea1',
+    },
     totalRows: { universalIdentifier: 'c3858a97-0b37-5295-95a1-50cd9c76945e' },
-    mappedColumnCount: { universalIdentifier: '5c4a1f2e-44f0-4db1-a771-5eb8c0b62897' },
-    createdRows: { universalIdentifier: '93417e00-da88-576b-a10a-b4d896549aa6' },
-    updatedRows: { universalIdentifier: 'b30d2b0f-5ade-5c29-a776-447cac189e2b' },
-    skippedRows: { universalIdentifier: '745c1322-3be0-593c-a406-252c65c854eb' },
+    mappedColumnCount: {
+      universalIdentifier: '5c4a1f2e-44f0-4db1-a771-5eb8c0b62897',
+    },
+    createdRows: {
+      universalIdentifier: '93417e00-da88-576b-a10a-b4d896549aa6',
+    },
+    updatedRows: {
+      universalIdentifier: 'b30d2b0f-5ade-5c29-a776-447cac189e2b',
+    },
+    skippedRows: {
+      universalIdentifier: '745c1322-3be0-593c-a406-252c65c854eb',
+    },
     errorRows: { universalIdentifier: '8de94459-01e2-5513-91a5-b111f80ff923' },
     rows: { universalIdentifier: 'e9237c0d-6fa5-5c18-bf97-d947e62b285c' },
   },
   importRowResult: {
-    ...buildStandardObjectSystemFields(STANDARD_OBJECT_UNIVERSAL_IDENTIFIERS.importRowResult),
-    importBatch: { universalIdentifier: '3fbcafdc-6e09-5d15-aadb-e6909f6c8d59' },
+    ...buildStandardObjectSystemFields(
+      STANDARD_OBJECT_UNIVERSAL_IDENTIFIERS.importRowResult,
+    ),
+    importBatch: {
+      universalIdentifier: '3fbcafdc-6e09-5d15-aadb-e6909f6c8d59',
+    },
     rowNumber: { universalIdentifier: '6dc1e80c-411b-5919-a0fb-c2c706a950ac' },
     outcome: { universalIdentifier: '235490b8-8ab2-5f4a-9308-7728a833306c' },
     reason: { universalIdentifier: '64b8b5c6-ba55-52a2-b569-19c0c9c66190' },
-    normalizedPhone: { universalIdentifier: '7f4e7494-a2e2-5c13-8da8-52cbe39c40c6' },
+    normalizedPhone: {
+      universalIdentifier: '7f4e7494-a2e2-5c13-8da8-52cbe39c40c6',
+    },
     personId: { universalIdentifier: '373114a9-ca3b-56c2-99b0-5e18d8a45f84' },
     propertyId: { universalIdentifier: '99513905-626f-50f8-94a5-5ff70dc077ef' },
-    opportunityId: { universalIdentifier: 'b5a884ab-2a1f-58d0-99a7-93a777638fb3' },
+    opportunityId: {
+      universalIdentifier: 'b5a884ab-2a1f-58d0-99a7-93a777638fb3',
+    },
   },
   opportunity: {
     ...buildStandardObjectSystemFields(
@@ -1222,6 +1258,22 @@ export const STANDARD_OBJECT_FIELDS = {
     ),
     name: { universalIdentifier: '20202020-8609-4f65-a2d9-44009eb422b5' },
     amount: { universalIdentifier: '20202020-583e-4642-8533-db761d5fa82f' },
+    arv: { universalIdentifier: 'f0e8d4b4-813e-4fd7-94a0-bbda89a11b01' },
+    repairs: { universalIdentifier: 'f0e8d4b4-813e-4fd7-94a0-bbda89a11b02' },
+    askingPrice: {
+      universalIdentifier: 'f0e8d4b4-813e-4fd7-94a0-bbda89a11b03',
+    },
+    sellerMinimum: {
+      universalIdentifier: 'f0e8d4b4-813e-4fd7-94a0-bbda89a11b04',
+    },
+    mao: { universalIdentifier: 'f0e8d4b4-813e-4fd7-94a0-bbda89a11b05' },
+    offer: { universalIdentifier: 'f0e8d4b4-813e-4fd7-94a0-bbda89a11b06' },
+    assignmentFee: {
+      universalIdentifier: 'f0e8d4b4-813e-4fd7-94a0-bbda89a11b07',
+    },
+    projectedProfit: {
+      universalIdentifier: 'f0e8d4b4-813e-4fd7-94a0-bbda89a11b08',
+    },
     closeDate: {
       universalIdentifier: '20202020-527e-44d6-b1ac-c4158d307b97',
     },
@@ -1312,7 +1364,9 @@ export const STANDARD_OBJECT_FIELDS = {
     propertyAddress: {
       universalIdentifier: '01ef96a8-3348-48f2-bd64-4331cdbe954a',
     },
-    propertyLinks: { universalIdentifier: 'd0279013-e137-5363-884b-2c4588fc7c3e' },
+    propertyLinks: {
+      universalIdentifier: 'd0279013-e137-5363-884b-2c4588fc7c3e',
+    },
     linkedinLink: {
       universalIdentifier: '20202020-f1af-48f7-893b-2007a73dd508',
     },

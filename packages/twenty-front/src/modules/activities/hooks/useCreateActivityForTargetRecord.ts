@@ -7,6 +7,7 @@ import { type CoreObjectNameSingular } from 'twenty-shared/types';
 
 type UseCreateActivityForTargetRecordParams = {
   targetRecord: ActivityTargetableObject;
+  defaultTaskTitle?: string;
   activityObjectNameSingular:
     | CoreObjectNameSingular.Note
     | CoreObjectNameSingular.Task;
@@ -16,6 +17,7 @@ type UseCreateActivityForTargetRecordParams = {
 export const useCreateActivityForTargetRecord = ({
   targetRecord,
   activityObjectNameSingular,
+  defaultTaskTitle,
 }: UseCreateActivityForTargetRecordParams) => {
   const { objectMetadataItem } = useObjectMetadataItem({
     objectNameSingular: targetRecord.targetObjectNameSingular,
@@ -29,7 +31,10 @@ export const useCreateActivityForTargetRecord = ({
   });
 
   const createActivity = () =>
-    openCreateActivityDrawer({ targetableObjects: [targetRecord] });
+    openCreateActivityDrawer({
+      targetableObjects: [targetRecord],
+      defaultTaskTitle,
+    });
 
   return {
     canCreateActivity:
