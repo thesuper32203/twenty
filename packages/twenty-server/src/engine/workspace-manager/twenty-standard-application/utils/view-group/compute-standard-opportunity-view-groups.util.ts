@@ -19,48 +19,92 @@ export const computeStandardOpportunityViewGroups = (
         position: 0,
       },
     }),
-    byStageScreening: createStandardViewGroupFlatMetadata({
+    byStageContacted: createStandardViewGroupFlatMetadata({
       ...args,
       objectName: 'opportunity',
       context: {
         viewName: 'byStage',
-        viewGroupName: 'screening',
+        viewGroupName: 'contacted',
         isVisible: true,
-        fieldValue: 'SCREENING',
+        fieldValue: 'CONTACTED',
         position: 1,
       },
     }),
-    byStageMeeting: createStandardViewGroupFlatMetadata({
+    byStageFollowUp: createStandardViewGroupFlatMetadata({
       ...args,
       objectName: 'opportunity',
       context: {
         viewName: 'byStage',
-        viewGroupName: 'meeting',
+        viewGroupName: 'followUp',
         isVisible: true,
-        fieldValue: 'MEETING',
+        fieldValue: 'FOLLOW_UP',
         position: 2,
       },
     }),
-    byStageProposal: createStandardViewGroupFlatMetadata({
+    byStageOffer: createStandardViewGroupFlatMetadata({
       ...args,
       objectName: 'opportunity',
       context: {
         viewName: 'byStage',
-        viewGroupName: 'proposal',
+        viewGroupName: 'offer',
         isVisible: true,
-        fieldValue: 'PROPOSAL',
+        fieldValue: 'OFFER',
         position: 3,
       },
     }),
-    byStageCustomer: createStandardViewGroupFlatMetadata({
+    byStageDeclined: createStandardViewGroupFlatMetadata({
       ...args,
       objectName: 'opportunity',
       context: {
         viewName: 'byStage',
-        viewGroupName: 'customer',
+        viewGroupName: 'declined',
         isVisible: true,
-        fieldValue: 'CUSTOMER',
+        fieldValue: 'DECLINED',
         position: 4,
+      },
+    }),
+    byStageAccepted: createStandardViewGroupFlatMetadata({
+      ...args,
+      objectName: 'opportunity',
+      context: {
+        viewName: 'byStage',
+        viewGroupName: 'accepted',
+        isVisible: true,
+        fieldValue: 'ACCEPTED',
+        position: 5,
+      },
+    }),
+    byStageUnderContract: createStandardViewGroupFlatMetadata({
+      ...args,
+      objectName: 'opportunity',
+      context: {
+        viewName: 'byStage',
+        viewGroupName: 'underContract',
+        isVisible: true,
+        fieldValue: 'UNDER_CONTRACT',
+        position: 6,
+      },
+    }),
+    byStageClosed: createStandardViewGroupFlatMetadata({
+      ...args,
+      objectName: 'opportunity',
+      context: {
+        viewName: 'byStage',
+        viewGroupName: 'closed',
+        isVisible: true,
+        fieldValue: 'CLOSED',
+        position: 7,
+      },
+    }),
+    byStageLost: createStandardViewGroupFlatMetadata({
+      ...args,
+      objectName: 'opportunity',
+      context: {
+        viewName: 'byStage',
+        viewGroupName: 'lost',
+        isVisible: true,
+        fieldValue: 'LOST',
+        position: 8,
       },
     }),
   };

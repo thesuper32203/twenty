@@ -52,14 +52,17 @@ export const useOpenCreateActivityDrawer = ({
   const openCreateActivityDrawer = async ({
     targetableObjects,
     customAssignee,
+    defaultTaskTitle,
   }: {
     targetableObjects: ActivityTargetableObject[];
     customAssignee?: WorkspaceMember;
+    defaultTaskTitle?: string;
   }) => {
     const activity = await createOneActivity({
       ...(activityObjectNameSingular === CoreObjectNameSingular.Task
         ? {
             assigneeId: customAssignee?.id,
+            ...(isDefined(defaultTaskTitle) ? { title: defaultTaskTitle } : {}),
           }
         : {}),
       position: 'last',

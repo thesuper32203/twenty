@@ -4,6 +4,7 @@ import { RecordPageSidePanelWidgetCommandMenuItems } from '@/command-menu-item/c
 import { InformationBannerDeletedRecord } from '@/information-banner/components/deleted-record/InformationBannerDeletedRecord';
 import { RecordShowContainerContextStoreTargetedRecordsEffect } from '@/object-record/record-show/components/RecordShowContainerContextStoreTargetedRecordsEffect';
 import { OpportunityContactDetails } from '@/object-record/record-show/components/OpportunityContactDetails';
+import { OpportunityQuickActions } from '@/object-record/record-show/components/OpportunityQuickActions';
 import { recordStoreFamilySelector } from '@/object-record/record-store/states/selectors/recordStoreFamilySelector';
 import { PageLayoutRenderer } from '@/page-layout/components/PageLayoutRenderer';
 import { usePageLayoutIdForRecord } from '@/page-layout/hooks/usePageLayoutIdForRecord';
@@ -39,6 +40,10 @@ const StyledContentContainer = styled.div`
   flex: 1;
   min-height: 0;
   overflow-y: auto;
+`;
+
+const StyledOpportunityActionsContainer = styled.div`
+  margin: 0 ${themeCssVariables.spacing[4]};
 `;
 
 export const PageLayoutRecordPageRenderer = ({
@@ -85,6 +90,15 @@ export const PageLayoutRecordPageRenderer = ({
               opportunityId={targetRecordIdentifier.id}
             />
           )}
+          {targetRecordIdentifier.targetObjectNameSingular ===
+            CoreObjectNameSingular.Opportunity &&
+            !recordDeletedAt && (
+              <StyledOpportunityActionsContainer>
+                <OpportunityQuickActions
+                  opportunityId={targetRecordIdentifier.id}
+                />
+              </StyledOpportunityActionsContainer>
+            )}
           <LayoutRenderingProvider
             value={{
               targetRecordIdentifier: {

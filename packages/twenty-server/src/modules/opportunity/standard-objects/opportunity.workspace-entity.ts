@@ -17,6 +17,14 @@ import { type WorkspaceMemberWorkspaceEntity } from 'src/modules/workspace-membe
 export class OpportunityWorkspaceEntity extends BaseWorkspaceEntity {
   name: string;
   amount: CurrencyMetadata | null;
+  arv: CurrencyMetadata | null;
+  repairs: CurrencyMetadata | null;
+  askingPrice: CurrencyMetadata | null;
+  sellerMinimum: CurrencyMetadata | null;
+  mao: CurrencyMetadata | null;
+  offer: CurrencyMetadata | null;
+  assignmentFee: CurrencyMetadata | null;
+  projectedProfit: CurrencyMetadata | null;
   closeDate: Date | null;
   stage: string;
   position: number;

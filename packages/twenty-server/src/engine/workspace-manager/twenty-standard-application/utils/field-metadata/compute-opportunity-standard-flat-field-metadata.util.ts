@@ -177,6 +177,187 @@ export const buildOpportunityStandardFlatFieldMetadatas = ({
     twentyStandardApplicationId,
     now,
   }),
+  arv: createStandardFieldFlatMetadata({
+    objectName,
+    workspaceId,
+    context: {
+      fieldName: 'arv',
+      type: FieldMetadataType.CURRENCY,
+      label: i18nLabel(msg({ message: `ARV`, context: 'fieldMetadata.label' })),
+      description: i18nLabel(
+        msg({
+          message: `ARV for the seller deal`,
+          context: 'fieldMetadata.description',
+        }),
+      ),
+      icon: 'IconCurrencyDollar',
+      isNullable: true,
+    },
+    standardObjectMetadataRelatedEntityIds,
+    dependencyFlatEntityMaps,
+    twentyStandardApplicationId,
+    now,
+  }),
+  repairs: createStandardFieldFlatMetadata({
+    objectName,
+    workspaceId,
+    context: {
+      fieldName: 'repairs',
+      type: FieldMetadataType.CURRENCY,
+      label: i18nLabel(
+        msg({ message: `Repairs`, context: 'fieldMetadata.label' }),
+      ),
+      description: i18nLabel(
+        msg({
+          message: `Repairs for the seller deal`,
+          context: 'fieldMetadata.description',
+        }),
+      ),
+      icon: 'IconCurrencyDollar',
+      isNullable: true,
+    },
+    standardObjectMetadataRelatedEntityIds,
+    dependencyFlatEntityMaps,
+    twentyStandardApplicationId,
+    now,
+  }),
+  askingPrice: createStandardFieldFlatMetadata({
+    objectName,
+    workspaceId,
+    context: {
+      fieldName: 'askingPrice',
+      type: FieldMetadataType.CURRENCY,
+      label: i18nLabel(
+        msg({ message: `Asking price`, context: 'fieldMetadata.label' }),
+      ),
+      description: i18nLabel(
+        msg({
+          message: `Asking price for the seller deal`,
+          context: 'fieldMetadata.description',
+        }),
+      ),
+      icon: 'IconCurrencyDollar',
+      isNullable: true,
+    },
+    standardObjectMetadataRelatedEntityIds,
+    dependencyFlatEntityMaps,
+    twentyStandardApplicationId,
+    now,
+  }),
+  sellerMinimum: createStandardFieldFlatMetadata({
+    objectName,
+    workspaceId,
+    context: {
+      fieldName: 'sellerMinimum',
+      type: FieldMetadataType.CURRENCY,
+      label: i18nLabel(
+        msg({ message: `Seller minimum`, context: 'fieldMetadata.label' }),
+      ),
+      description: i18nLabel(
+        msg({
+          message: `Seller minimum for the seller deal`,
+          context: 'fieldMetadata.description',
+        }),
+      ),
+      icon: 'IconCurrencyDollar',
+      isNullable: true,
+    },
+    standardObjectMetadataRelatedEntityIds,
+    dependencyFlatEntityMaps,
+    twentyStandardApplicationId,
+    now,
+  }),
+  mao: createStandardFieldFlatMetadata({
+    objectName,
+    workspaceId,
+    context: {
+      fieldName: 'mao',
+      type: FieldMetadataType.CURRENCY,
+      label: i18nLabel(msg({ message: `MAO`, context: 'fieldMetadata.label' })),
+      description: i18nLabel(
+        msg({
+          message: `MAO for the seller deal`,
+          context: 'fieldMetadata.description',
+        }),
+      ),
+      icon: 'IconCurrencyDollar',
+      isNullable: true,
+    },
+    standardObjectMetadataRelatedEntityIds,
+    dependencyFlatEntityMaps,
+    twentyStandardApplicationId,
+    now,
+  }),
+  offer: createStandardFieldFlatMetadata({
+    objectName,
+    workspaceId,
+    context: {
+      fieldName: 'offer',
+      type: FieldMetadataType.CURRENCY,
+      label: i18nLabel(
+        msg({ message: `Offer`, context: 'fieldMetadata.label' }),
+      ),
+      description: i18nLabel(
+        msg({
+          message: `Offer for the seller deal`,
+          context: 'fieldMetadata.description',
+        }),
+      ),
+      icon: 'IconCurrencyDollar',
+      isNullable: true,
+    },
+    standardObjectMetadataRelatedEntityIds,
+    dependencyFlatEntityMaps,
+    twentyStandardApplicationId,
+    now,
+  }),
+  assignmentFee: createStandardFieldFlatMetadata({
+    objectName,
+    workspaceId,
+    context: {
+      fieldName: 'assignmentFee',
+      type: FieldMetadataType.CURRENCY,
+      label: i18nLabel(
+        msg({ message: `Assignment fee`, context: 'fieldMetadata.label' }),
+      ),
+      description: i18nLabel(
+        msg({
+          message: `Assignment fee for the seller deal`,
+          context: 'fieldMetadata.description',
+        }),
+      ),
+      icon: 'IconCurrencyDollar',
+      isNullable: true,
+    },
+    standardObjectMetadataRelatedEntityIds,
+    dependencyFlatEntityMaps,
+    twentyStandardApplicationId,
+    now,
+  }),
+  projectedProfit: createStandardFieldFlatMetadata({
+    objectName,
+    workspaceId,
+    context: {
+      fieldName: 'projectedProfit',
+      type: FieldMetadataType.CURRENCY,
+      label: i18nLabel(
+        msg({ message: `Projected profit`, context: 'fieldMetadata.label' }),
+      ),
+      description: i18nLabel(
+        msg({
+          message: `Projected profit for the seller deal`,
+          context: 'fieldMetadata.description',
+        }),
+      ),
+      icon: 'IconCurrencyDollar',
+      isNullable: true,
+      isUIEditable: false,
+    },
+    standardObjectMetadataRelatedEntityIds,
+    dependencyFlatEntityMaps,
+    twentyStandardApplicationId,
+    now,
+  }),
   closeDate: createStandardFieldFlatMetadata({
     objectName,
     workspaceId,
@@ -230,39 +411,75 @@ export const buildOpportunityStandardFlatFieldMetadatas = ({
         },
         {
           id: '20202020-e685-4671-ac32-26d304dacb6e',
-          value: 'SCREENING',
+          value: 'CONTACTED',
           label: i18nLabel(
-            msg({ message: `Screening`, context: 'fieldMetadata.label' }),
+            msg({ message: `Contacted`, context: 'fieldMetadata.label' }),
           ),
           position: 1,
           color: 'purple',
         },
         {
           id: '20202020-dde9-4acc-b5ca-f6531a8ecb4a',
-          value: 'MEETING',
+          value: 'FOLLOW_UP',
           label: i18nLabel(
-            msg({ message: `Meeting`, context: 'fieldMetadata.label' }),
+            msg({ message: `Follow-up`, context: 'fieldMetadata.label' }),
           ),
           position: 2,
           color: 'sky',
         },
         {
           id: '20202020-696e-4f6b-91bc-f413e9b2f654',
-          value: 'PROPOSAL',
+          value: 'OFFER',
           label: i18nLabel(
-            msg({ message: `Proposal`, context: 'fieldMetadata.label' }),
+            msg({ message: `Offer`, context: 'fieldMetadata.label' }),
           ),
           position: 3,
           color: 'turquoise',
         },
         {
-          id: '20202020-0bb5-4a6f-a8b2-774bbad21104',
-          value: 'CUSTOMER',
+          id: 'f0e8d4b4-813e-4fd7-94a0-bbda89a12b06',
+          value: 'DECLINED',
           label: i18nLabel(
-            msg({ message: `Customer`, context: 'fieldMetadata.label' }),
+            msg({ message: `Declined`, context: 'fieldMetadata.label' }),
           ),
           position: 4,
-          color: 'yellow',
+          color: 'orange',
+        },
+        {
+          id: '20202020-0bb5-4a6f-a8b2-774bbad21104',
+          value: 'ACCEPTED',
+          label: i18nLabel(
+            msg({ message: `Accepted`, context: 'fieldMetadata.label' }),
+          ),
+          position: 5,
+          color: 'green',
+        },
+        {
+          id: 'f0e8d4b4-813e-4fd7-94a0-bbda89a12b07',
+          value: 'UNDER_CONTRACT',
+          label: i18nLabel(
+            msg({ message: `Under Contract`, context: 'fieldMetadata.label' }),
+          ),
+          position: 6,
+          color: 'blue',
+        },
+        {
+          id: 'f0e8d4b4-813e-4fd7-94a0-bbda89a12b08',
+          value: 'CLOSED',
+          label: i18nLabel(
+            msg({ message: `Closed`, context: 'fieldMetadata.label' }),
+          ),
+          position: 7,
+          color: 'turquoise',
+        },
+        {
+          id: 'f0e8d4b4-813e-4fd7-94a0-bbda89a12b09',
+          value: 'LOST',
+          label: i18nLabel(
+            msg({ message: `Lost`, context: 'fieldMetadata.label' }),
+          ),
+          position: 8,
+          color: 'gray',
         },
       ],
     },
@@ -388,8 +605,15 @@ export const buildOpportunityStandardFlatFieldMetadatas = ({
       type: FieldMetadataType.RELATION,
       morphId: null,
       fieldName: 'property',
-      label: i18nLabel(msg({ message: `Property`, context: 'fieldMetadata.label' })),
-      description: i18nLabel(msg({ message: `Subject property`, context: 'fieldMetadata.description' })),
+      label: i18nLabel(
+        msg({ message: `Property`, context: 'fieldMetadata.label' }),
+      ),
+      description: i18nLabel(
+        msg({
+          message: `Subject property`,
+          context: 'fieldMetadata.description',
+        }),
+      ),
       icon: 'IconHome',
       isNullable: true,
       targetObjectName: 'property',
